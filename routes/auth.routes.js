@@ -8,14 +8,18 @@ router.get('/signup',(req,res,next)=>{
 })
 
 router.post('/signup',(req,res,next)=>{
-    const {username,password} = req.body;
+    const {username,lastname,password,number,email,profile_pic} = req.body;
     
     const salt = bcryptjs.genSaltSync(10)
     const hashedPassword = bcryptjs.hashSync(password,salt)
     console.log('password hash: ', hashedPassword)
     User.create({
             username,
-            password:hashedPassword
+            lastname,
+            password:hashedPassword,
+            number,
+            email,
+            profile_pic
         })
     .then(userFromDB =>{
         console.log('New user create', userFromDB)
