@@ -1,48 +1,137 @@
-const router = require('express').Router();
-const User = require('../models/User.model');
-const bcryptjs = require('bcryptjs');
+const router = require("express").Router();
 
-router.get('/signup',(req,res,next)=>{
-    console.log('Llegaste a la ruta de logueo');
-    res.render('auth/signup');
-})
 
-router.post('/signup',(req,res,next)=>{
-    const {username,lastname,password,number,email,profile_pic} = req.body;
+const mongoose = require("mongoose");
+
+// How many rounds should bcrypt run the salt (default [10 - 12 rounds])
+const saltRounds = 10;
+
+// Require the Pet model in order to interact with the database
+const Pet = require("../models/Pet.model");
+
+// Require necessary (isLoggedOut and isLiggedIn) middleware in order to control access to specific routes
+const isLoggedOut = require("../middleware/isLoggedOut");
+const isLoggedIn = require("../middleware/isLoggedIn");
+
+router.get("/createNewPet", isLoggedOut, (req, res) => {
+  res.render("auth/createNewPet");
+});
+
+router.post("/createNewPet", isLoggedOut, (req, res) => {
+  const { petName,petType,profile_pic,size,weight,sex,address } = req.body;
+
+  if (!petName) {
+    return res.status(400).render("auth/createNewPet", {
+      errorMessage: "Please provide your pet name.",
+    });
+  }
+
+  if (!petType) {
+    return res.status(400).render("auth/createNewPet", {
+      errorMessage: "Please define wether your pet is a god or a cat",
+    });
+  }
+
+  if (!profile_pic) {
+    return res.status(400).render("auth/createNewPet", {
+      errorMessage: "Please upload your pet pic",
+    });
+  }
+
+  if (!size) { //
+    return res.status(400).render("auth/createNewPet", {
+      errorMessage: "Please indicate your pet size",
+    });
+  }
+
+  if (!weight) {
+    return res.status(400).render("auth/createNewPet", {
+      errorMessage: "Please indicate your pet weight",
+    });
+  }
+
+  if (!sex) {
+    return res.status(400).render("auth/createNewPet", {
+      errorMessage: "Please indicate your pet sex",
+    });
+  }
+
+  if (!address) {
+    return res.status(400).render("auth/createNewPet", {
+      errorMessage: "Please indicate where to find the pet",
+    });
+  }
+  // Search the database for a user with the petName submitted in the form
+  Pet.findOne({ petName }).then((found) => {
+    // If the user is found, send the message petName is taken
+    if (found) {
+      return res
+        .status(400)
+        .render("auth.createNewPet", { errorMessage: "petName already taken." });
+    }
     
-    const salt = bcryptjs.genSaltSync(10)
-    const hashedPassword = bcryptjs.hashSync(password,salt)
-    console.log('password hash: ', hashedPassword)
-    User.create({
-            username,
-            lastname,
-            password:hashedPassword,
-            number,
-            email,
-            profile_pic
-        })
-    .then(userFromDB =>{
-        console.log('New user create', userFromDB)
-        res.redirect(`user/userProfile/${userFromDB._id}`)
-    })
-    .catch(error =>{
-        console.log('Ha salido un error en el post ID',error)
-        next(error)
-    })
-})
+  })
 
-router.get('/user/userProfile/:id',(req,res,next)=>{
-    const {id} = req.params;
-    console.log('Llegaste al get de userProfile')
-    User.findById(id)
-    .then(username =>{
-        res.render('user/userProfile',username)
-    })
-    .catch(error =>{
-        console.log('Ha salido un error en el get ID',error)
-        next(error)
-    })
-})
+  Pet.create({
+    petName,petType,profile_pic,size,weight,sex,address
+  })
+  .then(newpet =>{
+    res.redirect("/");
+    console.log("pet creado con éxito",newpet)
+  })
+  .catch((error) => {
+    console.log("error creando pet", error)
+  })
 
+
+
+});
+
+router.get("/login", isLoggedOut, (req, res) => {
+  res.render("auth/login");
+});
+
+router.post("/login", isLoggedOut, (req, res, next) => {
+  const { petName } = req.body;
+
+  if (!petName) {
+    return res.status(400).render("auth/login", {
+      errorMessage: "Please provide your petName.",
+    });
+  }
+
+  // Search the database for a user with the petName submitted in the form
+  Pet.findOne({ petName })
+    .then((pet) => {
+      // If the user isn't found, send the message that user provided wrong credentials
+      if (!pet) {
+        return res.status(400).render("auth/login", {
+          errorMessage: "Wrong credentials.",
+        });
+      }
+
+      req.session.pet = pet;
+      // req.session.user = user._id; // ! better and safer but in this case we saving the entire user object
+      return res.redirect("/");
+    })
+
+    .catch((err) => {
+      // in this case we are sending the error handling to the error handling middleware that is defined in the error handling file
+      // you can just as easily run the res.status that is commented out below
+      next(err);
+      // return res.status(500).render("login", { errorMessage: err.message });
+    });
+});
+
+router.get("/logout", isLoggedIn, (req, res) => {
+  req.session.destroy((err) => {
+    if (err) {
+      return res
+        .status(500)
+        .render("auth/logout", { errorMessage: err.message });
+    }
+    res.redirect("/");
+  });
+});
 
 module.exports = router;

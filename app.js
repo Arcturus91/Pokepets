@@ -1,5 +1,6 @@
 // ℹ️ Gets access to environment variables/settings
 // https://www.npmjs.com/package/dotenv
+
 require('dotenv/config');
 
 // ℹ️ Connects to the database
@@ -35,4 +36,5 @@ app.use('/auth', authRoutes)
 require('./error-handling')(app);
 
 module.exports = app;
+
 
