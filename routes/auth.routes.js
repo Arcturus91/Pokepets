@@ -1,6 +1,5 @@
 const router = require("express").Router();
 
-
 const mongoose = require("mongoose");
 
 // How many rounds should bcrypt run the salt (default [10 - 12 rounds])
