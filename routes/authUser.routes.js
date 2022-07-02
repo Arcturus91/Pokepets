@@ -17,7 +17,17 @@ router.get('/signup',(req,res,next)=>{
 
 router.post('/signup',(req,res,next)=>{
     const {username,lastname,password,number,email,profile_pic} = req.body;
-    
+    if(!username||!lastname||!password||!number||!email){
+        res.render('auth/userSignup',{errorMessage:'Los campos de username, lastname, email y password deben ser llenados'})
+        return;
+    }
+    const regex = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/;
+    if(!regex.text(password)){
+        res
+        .status(500)
+        .render('auth/userSinguo',{errorMessage:'El password necesita tener al menos ocho caracteres, debe contener al menos una letra mayuscula, minuscula y un numero.'})
+        return;
+    }
     const salt = bcryptjs.genSaltSync(10)
     const hashedPassword = bcryptjs.hashSync(password,salt)
     console.log('password hash: ', hashedPassword)
@@ -38,7 +48,17 @@ router.post('/signup',(req,res,next)=>{
     })
     .catch(error =>{
         console.log('Ha salido un error en el post ID',error)
-        next(error)
+        if(error instanceof mongoose.Error.ValidationError){
+            res.status(500).render('auth/userSingup',{
+                errorMessage:error.message
+            });
+        }else if(error.code===11000){
+            res.status(500).render('auth/userSingup',{
+                errorMessage: 'El correo debe ser unico'
+            })
+        }else{
+            next(error)
+        }
     })
 })
 
