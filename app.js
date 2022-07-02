@@ -36,7 +36,7 @@ const authUserRoutes = require('./routes/authUser.routes')
 app.use('/auth', authUserRoutes)
 
 const petauthRoutes = require("./routes/petauth.routes");
-app.use("/auth", petauthRoutes);
+app.use("/", petauthRoutes);
 
 // ❗ To handle errors. Routes that don't exist or errors that you handle in specific routes
 require('./error-handling')(app);
