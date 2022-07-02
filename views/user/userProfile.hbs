@@ -1,1 +1,6 @@
-<h1>Hello {{username}}</h1>
+{{#if user}}
+<img src="{{user.profile_pic}}" alt="">
+<h1>Hello {{user.username}} {{user.lastname}}</h1>
+{{else}}
+<p>El susario no esta logueado</p>
+{{/if}}

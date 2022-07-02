@@ -13,11 +13,15 @@ To do:
 	desglose:
 		
 
-- [] Definir correctamente el nombre de los archivos para no tener problemas al momento de subir los cambios en las ramas remotas.
+- [x] Definir correctamente el nombre de los archivos para no tener problemas al momento de subir los cambios en las ramas remotas.
 
 - [] terminar userProfile.hbs para presentacion del usuario.
 
-- [] cambiar nombre singup.js 
+- [x] cambiar nombre singup.js 
+
+- [x] session persistente.
+
+- [] complementar modelo user.
 
 ### 👾
 
