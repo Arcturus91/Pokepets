@@ -4,7 +4,7 @@ const bcryptjs = require('bcryptjs');
 
 router.get('/signup',(req,res,next)=>{
     console.log('Llegaste a la ruta de logueo');
-    res.render('auth/signup');
+    res.render('auth/userSignup');
 })
 
 router.post('/signup',(req,res,next)=>{
