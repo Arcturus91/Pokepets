@@ -67,16 +67,22 @@ router.post('/login', (req,res,next)=>{
         });
         return;
     }
-    user.findOne({username})
-    .then(user =>{
+    User.findOne({username})
+    .then((user) =>{
+        req.session.currentUser = user;
         if(!user){
             res.render('auth/userLogin')
             return
         }else if(bcryptjs.compareSync(password,user.password)){
-            res.render('/user/userProfile')
+            res.redirect(`/auth/user/userProfile/${user._id}`);
+        }else{
+            res.render('auth/userLogin')
         }
     })
-
+    .catch(error =>{
+        console.log('Ha salido un error en el post login',error)
+        next(error)
+    })
 })
 
 module.exports = router;
