@@ -13,50 +13,50 @@ const isLoggedOut = require("../middleware/isLoggedOut");
 const isLoggedIn = require("../middleware/isLoggedIn");
 
 router.get("/createNewPet", isLoggedOut, (req, res) => {
-  res.render("auth/createNewPet");
+  res.render("createNewPet");
 });
 
 router.post("/createNewPet", isLoggedOut, (req, res) => {
   const { petName,petType,profile_pic,size,weight,sex,address } = req.body;
 
   if (!petName) {
-    return res.status(400).render("auth/createNewPet", {
+    return res.status(400).render("createNewPet", {
       errorMessage: "Please provide your pet name.",
     });
   }
 
   if (!petType) {
-    return res.status(400).render("auth/createNewPet", {
+    return res.status(400).render("createNewPet", {
       errorMessage: "Please define wether your pet is a god or a cat",
     });
   }
 
   if (!profile_pic) {
-    return res.status(400).render("auth/createNewPet", {
+    return res.status(400).render("createNewPet", {
       errorMessage: "Please upload your pet pic",
     });
   }
 
   if (!size) { //
-    return res.status(400).render("auth/createNewPet", {
+    return res.status(400).render("createNewPet", {
       errorMessage: "Please indicate your pet size",
     });
   }
 
   if (!weight) {
-    return res.status(400).render("auth/createNewPet", {
+    return res.status(400).render("createNewPet", {
       errorMessage: "Please indicate your pet weight",
     });
   }
 
   if (!sex) {
-    return res.status(400).render("auth/createNewPet", {
+    return res.status(400).render("createNewPet", {
       errorMessage: "Please indicate your pet sex",
     });
   }
 
   if (!address) {
-    return res.status(400).render("auth/createNewPet", {
+    return res.status(400).render("createNewPet", {
       errorMessage: "Please indicate where to find the pet",
     });
   }
@@ -66,7 +66,7 @@ router.post("/createNewPet", isLoggedOut, (req, res) => {
     if (found) {
       return res
         .status(400)
-        .render("auth.createNewPet", { errorMessage: "petName already taken." });
+        .render("createNewPet", { errorMessage: "petName already taken." });
     }
     
   })
@@ -86,6 +86,67 @@ router.post("/createNewPet", isLoggedOut, (req, res) => {
 
 });
 
+
+
+router.get("/listPets", (req, res) => {
+ 
+Pet.find()
+.then(pets => {
+  console.log("los perros ", pets)
+  res.render("listPets", { pets });
+})
+.catch((error) => {
+  console.log("error", error);
+  next(); //esto me enviará a la página de errores.
+});
+})
+
+router.get("/profile/:id", (req, res, next) => {
+
+  if (!req.session.currentUser) {
+      return res.render("auth/userSignup"); // quiza sería ideal tener signup / login en uno solo 
+    }
+  
+    console.log("estoy logeado ", req.session.currentUser);
+  
+    const { id } = req.params;
+  
+    Pet.findById(id)
+      .then((pet) => {
+        res.render("auth/profilePet", pet);
+      })
+      .catch((err) => {
+        console.log(err);
+        next();
+      });
+  });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//pendinete de modificar
 router.get("/login", isLoggedOut, (req, res) => {
   res.render("auth/login");
 });
