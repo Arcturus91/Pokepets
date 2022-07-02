@@ -7,12 +7,12 @@ const userSchema = new Schema(
     type: String,
     unique: true,
     trim: true,
-    required: true
+    //required: true
     },
   lastname: {
     type: String,
     trim: true,
-    required: true
+    //required: true
     },
   password: {
     type: String,
@@ -27,6 +27,7 @@ const userSchema = new Schema(
     },
   email: {
     type: String,
+    match: [/^\S+@\S+\.\S+$/, 'Por favor ingresa un correo valido'],
     trim: true,
     lowercase: true,
     unique: true,

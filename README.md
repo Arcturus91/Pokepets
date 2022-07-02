@@ -23,5 +23,7 @@ To do:
 
 - [] complementar modelo user.
 
+- [x] ruta login y hbs.
+
 ### 👾
 
