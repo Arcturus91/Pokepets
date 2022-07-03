@@ -16,16 +16,20 @@ router.get('/signup',(req,res,next)=>{
 });
 
 router.post('/signup',(req,res,next)=>{
-    const {username,lastname,password,number,email,profile_pic} = req.body;
+    let {username,lastname,password,number,email,profile_pic} = req.body;
+    if(!profile_pic){
+       profile_pic = "https://res.cloudinary.com/dhgfid3ej/image/upload/v1558806705/asdsadsa_iysw1l.jpg"
+    }
+    console.log('que es el req.body: ',req.body)
     if(!username||!lastname||!password||!number||!email){
         res.render('auth/userSignup',{errorMessage:'Los campos de username, lastname, email y password deben ser llenados'})
         return;
     }
     const regex = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/;
-    if(!regex.text(password)){
+    if(!regex.test(password)){
         res
         .status(500)
-        .render('auth/userSinguo',{errorMessage:'El password necesita tener al menos ocho caracteres, debe contener al menos una letra mayuscula, minuscula y un numero.'})
+        .render('auth/userSingup',{errorMessage:'El password necesita tener al menos ocho caracteres, debe contener al menos una letra mayuscula, minuscula y un numero.'})
         return;
     }
     const salt = bcryptjs.genSaltSync(10)
@@ -64,10 +68,9 @@ router.post('/signup',(req,res,next)=>{
 
 router.get('/user/userProfile/:id',(req,res,next)=>{
     const {id} = req.params;
-    //console.log('Llegaste al get de userProfile')
+    console.log('Llegaste al get de userProfile')
     User.findById(id)
     .then(user =>{
-        console.log("el user logeado", user)
         res.render('user/userProfile',{user})
     })
     .catch(error =>{
@@ -107,4 +110,3 @@ router.post('/login', (req,res,next)=>{
 })
 
 module.exports = router;
-
