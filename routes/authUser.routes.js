@@ -64,9 +64,10 @@ router.post('/signup',(req,res,next)=>{
 
 router.get('/user/userProfile/:id',(req,res,next)=>{
     const {id} = req.params;
-    console.log('Llegaste al get de userProfile')
+    //console.log('Llegaste al get de userProfile')
     User.findById(id)
     .then(user =>{
+        console.log("el user logeado", user)
         res.render('user/userProfile',{user})
     })
     .catch(error =>{
