@@ -1,6 +1,17 @@
 {{#if user}}
 <img src="{{user.profile_pic}}" alt="">
-<h1>Hello {{user.username}} {{user.lastname}}</h1>
+<h2>Hello {{user.username}} {{user.lastname}}</h2>
+<p>Number: {{user.number}}</p>
+<P>Email: {{user.email}}</P>
+
+
+<button type="submit">Edit</button>
+
+<br>
+<form id="logout-form" action="/auth/logout" method="POST">
+    <button>Logout</button>
+</form>
+
 {{else}}
 <p>El susario no esta logueado</p>
 {{/if}}

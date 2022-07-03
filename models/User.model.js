@@ -18,7 +18,7 @@ const userSchema = new Schema(
     required: true  
     },
   _comments: [{type:Schema.Types.ObjectId, ref:'Comment'}],
-  _pets: [{type:Schema.Types.ObjectId, ref:'Perro'}],
+  _pets: [{type:Schema.Types.ObjectId, ref:'Pet'}],
   number:{
     type: Number,
     unique: true,

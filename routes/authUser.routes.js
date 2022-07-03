@@ -109,5 +109,17 @@ router.post('/login', (req,res,next)=>{
     })
 })
 
+
+router.post('/logout', (req, res, next) => {
+    req.session.destroy(err => {
+        console.log('Destruyendo la sesion');
+      if (err) next(err);
+      res.redirect('/listPets');
+    });
+    console.log('Sesion destruida');
+  });
+
+
+
 module.exports = router;
 
