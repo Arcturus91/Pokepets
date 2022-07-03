@@ -5,21 +5,20 @@ const userSchema = new Schema(
   {
   username: {
     type: String,
-    unique: true,
     trim: true,
-    //required: true
+    required: true
     },
   lastname: {
     type: String,
     trim: true,
-    //required: true
+    required: true
     },
   password: {
     type: String,
     required: true  
     },
   _comments: [{type:Schema.Types.ObjectId, ref:'Comment'}],
-  _pets: [{type:Schema.Types.ObjectId, ref:'Perro'}],
+  _pets: [{type:Schema.Types.ObjectId, ref:'Pet'}],
   number:{
     type: Number,
     unique: true,

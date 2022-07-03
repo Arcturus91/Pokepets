@@ -1,5 +1,5 @@
 const router = require("express").Router();
-
+const User = require("../models/User.model");
 const mongoose = require("mongoose");
 
 // How many rounds should bcrypt run the salt (default [10 - 12 rounds])
@@ -17,7 +17,8 @@ router.get("/createNewPet", isLoggedOut, (req, res) => {
 });
 
 router.post("/createNewPet", isLoggedOut, (req, res) => {
-  const { petName,petType,profile_pic,size,weight,sex,address } = req.body;
+  const { petName, petType, profile_pic, size, weight, sex, address } =
+    req.body;
 
   if (!petName) {
     return res.status(400).render("createNewPet", {
@@ -37,7 +38,8 @@ router.post("/createNewPet", isLoggedOut, (req, res) => {
     });
   }
 
-  if (!size) { //
+  if (!size) {
+    //
     return res.status(400).render("createNewPet", {
       errorMessage: "Please indicate your pet size",
     });
@@ -68,76 +70,81 @@ router.post("/createNewPet", isLoggedOut, (req, res) => {
         .status(400)
         .render("createNewPet", { errorMessage: "petName already taken." });
     }
-    
-  })
-
-  Pet.create({
-    petName,petType,profile_pic,size,weight,sex,address
-  })
-  .then(newpet =>{
-    res.redirect("/");
-    console.log("pet creado con éxito",newpet)
-  })
-  .catch((error) => {
-    console.log("error creando pet", error)
-  })
-
-
-
-});
-
-
-
-router.get("/listPets", (req, res) => {
- 
-Pet.find()
-.then(pets => {
-  console.log("los perros ", pets)
-  res.render("listPets", { pets });
-})
-.catch((error) => {
-  console.log("error", error);
-  next(); //esto me enviará a la página de errores.
-});
-})
-
-router.get("/profile/:id", (req, res, next) => {
-
-  if (!req.session.currentUser) {
-      return res.render("auth/userSignup"); // quiza sería ideal tener signup / login en uno solo 
-    }
-  
-    console.log("estoy logeado ", req.session.currentUser);
-  
-    const { id } = req.params;
-  
-    Pet.findById(id)
-      .then((pet) => {
-        res.render("auth/profilePet", pet);
-      })
-      .catch((err) => {
-        console.log(err);
-        next();
-      });
   });
 
+  Pet.create({
+    petName,
+    petType,
+    profile_pic,
+    size,
+    weight,
+    sex,
+    address,
+  })
+    .then((newpet) => {
+      res.redirect("/");
+      console.log("pet creado con éxito", newpet);
+    })
+    .catch((error) => {
+      console.log("error creando pet", error);
+    });
+});
 
+router.get("/listPets", (req, res) => {
+  Pet.find()
+    .then((pets) => {
+      console.log("los perros ", pets);
+      res.render("listPets", { pets });
+    })
+    .catch((error) => {
+      console.log("error", error);
+      next(); //esto me enviará a la página de errores.
+    });
+});
 
+//Perfil único del pet
 
+router.get("/profile/:id", (req, res, next) => {
+  if (!req.session.currentUser) {
+    return res.render("auth/userSignup"); // quiza sería ideal tener signup / login en uno solo
+  }
 
+  console.log("estoy logeado ", req.session.currentUser);
 
+  const { id } = req.params;
 
+  Pet.findById(id)
+    .then((pet) => {
+      res.render("auth/profilePet", pet);
+    })
+    .catch((err) => {
+      console.log(err);
+      next();
+    });
+});
 
+//Adopt
 
+router.get("/adoptSuccess/:id", (req, res, next) => {
+  if (!req.session.currentUser) {
+    return res.render("auth/userSignup"); // quiza sería ideal tener signup / login en uno solo
+  }
+  const { id } = req.params;
 
+  console.log("llegué al update")
 
+  User.findByIdAndUpdate(req.session.currentUser._id, { $push: { _pets: id } })
+    .then((user) => {
 
-
-
-
-
-
-
+Pet.findByIdAndUpdate(id,{ _adopter: user._id })
+.then(pet=>{console.log("the updated user and pet ", user, pet);
+res.render("auth/adoptSuccess",  user);})
+      
+    })
+    .catch((error) => {
+      console.log("error updating user", error);
+    });
+});
 
 
 
