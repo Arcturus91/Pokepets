@@ -12,13 +12,25 @@ const Pet = require("../models/Pet.model");
 const isLoggedOut = require("../middleware/isLoggedOut");
 const isLoggedIn = require("../middleware/isLoggedIn");
 
+//crear mascota
+
 router.get("/createNewPet", isLoggedOut, (req, res) => {
   res.render("createNewPet");
 });
 
 router.post("/createNewPet", isLoggedOut, (req, res) => {
+
+
+
   const { petName, petType, profile_pic, size, weight, sex, address } =
     req.body;
+
+
+    if (req.session.currentUser){
+      let _rescuer = req.session.currentUser._id
+    } else {
+      let _rescuer = ""
+    }
 
   if (!petName) {
     return res.status(400).render("createNewPet", {
@@ -80,6 +92,7 @@ router.post("/createNewPet", isLoggedOut, (req, res) => {
     weight,
     sex,
     address,
+    _rescuer
   })
     .then((newpet) => {
       res.redirect("/");
