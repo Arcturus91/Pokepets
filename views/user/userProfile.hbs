@@ -5,6 +5,14 @@
 <P>Email: {{user.email}}</P>
 
 
+{{#each user._pets}}
+<img src="{{profile_pic}}" alt=""> {{!-- mostrar la image? --}}
+<h1>{{petType}} {{petName}}</h1>
+<p>{{sex}}</p>
+
+
+{{/each}}
+
 <button type="submit">Edit</button>
 
 <br>
