@@ -122,4 +122,3 @@ router.post('/logout', (req, res, next) => {
 
 
 module.exports = router;
-
