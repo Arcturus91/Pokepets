@@ -88,14 +88,14 @@ router.get('/login',(req,res,next)=>{
 })
 
 router.post('/login', (req,res,next)=>{
-    const {username, password} = req.body;
-    if(!username||!password){
+    const {email, password} = req.body;
+    if(!email||!password){
         res.render('auth/userLogin',{
-            errorMessage:'ingresa username y password'
+            errorMessage:'I need email  y password'
         });
         return;
     }
-    User.findOne({username})
+    User.findOne({email})
     .then((user) =>{
         req.session.currentUser = user;
         if(!user){
