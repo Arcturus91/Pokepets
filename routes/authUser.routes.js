@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const User = require('../models/User.model');
 const bcryptjs = require('bcryptjs');
+const fileUploader = require('../config/cloudinary.config');
 
 
 router.get('/signup',(req,res,next)=>{
@@ -15,7 +16,7 @@ router.get('/signup',(req,res,next)=>{
     res.render('auth/userSignup')
 });
 
-router.post('/signup',(req,res,next)=>{
+router.post('/signup',fileUploader.single('profile_pic'),(req,res,next)=>{
     let {username,lastname,password,number,email,profile_pic} = req.body;
     if(!profile_pic){
        profile_pic = "https://res.cloudinary.com/dhgfid3ej/image/upload/v1558806705/asdsadsa_iysw1l.jpg"
@@ -41,7 +42,7 @@ router.post('/signup',(req,res,next)=>{
             password:hashedPassword,
             number,
             email,
-            profile_pic
+            profile_pic:req.file.path
         })
     .then(userFromDB =>{
         console.log('New user create', userFromDB)
@@ -87,14 +88,14 @@ router.get('/login',(req,res,next)=>{
 })
 
 router.post('/login', (req,res,next)=>{
-    const {username, password} = req.body;
-    if(!username||!password){
+    const {email, password} = req.body;
+    if(!email||!password){
         res.render('auth/userLogin',{
-            errorMessage:'ingresa username y password'
+            errorMessage:'I need email  y password'
         });
         return;
     }
-    User.findOne({username})
+    User.findOne({email})
     .then((user) =>{
         req.session.currentUser = user;
         if(!user){

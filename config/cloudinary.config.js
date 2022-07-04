@@ -1,5 +1,3 @@
-//vamos a importar
-
 const cloudinary = require('cloudinary').v2 //le decimos que vamos a usar la version 2.
 const { CloudinaryStorage} = require('multer-storage-cloudinary');
 const multer = require('multer')
@@ -23,8 +21,3 @@ const storage =new CloudinaryStorage({
 });
 
 module.exports = multer({storage})
-
-
-
-
-
