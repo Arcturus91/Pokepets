@@ -1,0 +1,52 @@
+
+
+<div class="album py-5 bg-light">
+
+    <h1>List of available pets for Adoption</h1>
+
+<h6>Sign up / Log in first to adopt</h6>
+
+<br>
+<a href="/">home</a>
+
+  <div class="container">
+
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 d-flex justify-content-center">
+
+      {{#each pets}}
+
+      {{#if this._adopter }}
+
+      {{else}}
+        <div class="card text-center m-5" style="width: 18rem;">
+          
+          <img class="card-img-top" src="https://image.shutterstock.com/image-photo/beautiful-cat-isolated-on-white-260nw-452907418.jpg" alt="Kitty" />
+          <div class="card-body">
+            <h5 class="card-title">{{petName}}</h5>
+            <ul>
+                <li> {{petType}}</li>
+                <li> Size: {{size}} centimeters</li>
+                <li> Weight: {{weight}} kilograms</li>
+                <li> {{sex}}</li>
+                <li> {{address}}</li>
+            </ul>
+            <a href="/profile/{{_id}}" class="btn btn-danger">Check the adoption profile</a>
+          </div>
+
+        </div>
+        {{/if}}
+      {{/each}}
+
+    </div>
+  </div>
+</div>
+
+{{!-- agregar una bandera que revise si es gato / perro --}}
+
+{{!--   petName: 'bonita',
+    petType: 'Gato',
+    profile_pic: 'Screen Shot 2020-04-26 at 11.49.46 AM.png',
+    size: '2',
+    weight: '2',
+    sex: 'Hembra',
+    address: --}}
