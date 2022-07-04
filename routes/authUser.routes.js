@@ -70,7 +70,7 @@ router.get('/user/userProfile/:id',(req,res,next)=>{
     const {id} = req.params;
     console.log('Llegaste al get de userProfile')
     User.findById(id)
-    .populate('_pets') //add _comments
+    .populate('_pets') //add _commets
     .then(user =>{
         console.log('USER: ',user);
         console.log('{USER}: ',{user});

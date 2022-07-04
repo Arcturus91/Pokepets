@@ -21,9 +21,12 @@ To do:
 
 - [x] session persistente.
 
-- [] complementar modelo user.
+- [] complementar modelo user.  ??
 
 - [x] ruta login y hbs.
+
+- [] profileUser mostrar pets adoptados
+
 
 ### 👾
 
