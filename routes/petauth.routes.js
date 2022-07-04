@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const User = require("../models/User.model");
 const mongoose = require("mongoose");
+const fileUploader = require('../config/cloudinary.config');
 
 // How many rounds should bcrypt run the salt (default [10 - 12 rounds])
 const saltRounds = 10;
@@ -12,17 +13,23 @@ const Pet = require("../models/Pet.model");
 const isLoggedOut = require("../middleware/isLoggedOut");
 const isLoggedIn = require("../middleware/isLoggedIn");
 
-//crear mascota
+//CREATE PET
+  //Create pet GET route
 
 router.get("/createNewPet", isLoggedOut, (req, res) => {
   res.render("createNewPet");
 });
+  //Create pet POST route
+router.post("/createNewPet", fileUploader.single('profile_pic'), isLoggedOut, (req, res) => {
 
-router.post("/createNewPet", isLoggedOut, (req, res) => {
+  let profile_pic;
+  if(req.file){
+      profile_pic = req.file.path
+  }
 
+  console.log("req.file",req.file)
 
-
-  const { petName, petType, profile_pic, size, weight, sex, address } =
+  const { petName, petType, size, weight, sex, address } =
     req.body;
 
 
@@ -74,6 +81,7 @@ router.post("/createNewPet", isLoggedOut, (req, res) => {
       errorMessage: "Please indicate where to find the pet",
     });
   }
+
   // Search the database for a user with the petName submitted in the form
   Pet.findOne({ petName }).then((found) => {
     // If the user is found, send the message petName is taken
@@ -91,8 +99,8 @@ router.post("/createNewPet", isLoggedOut, (req, res) => {
     size,
     weight,
     sex,
-    address,
-    _rescuer
+    address/*,
+     _rescuer */
   })
     .then((newpet) => {
       res.redirect("/");
