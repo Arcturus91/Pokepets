@@ -35,7 +35,13 @@ const userSchema = new Schema(
   profile_pic: {
     type: String,
     default: "https://res.cloudinary.com/dhgfid3ej/image/upload/v1558806705/asdsadsa_iysw1l.jpg"
-  }
+  },
+  ////////////////////////////////////////////////////////////////////////
+  role:{
+    type:String,
+    enum:["ADMIN","USER"],
+    default:"USER"
+   }
   },
   {timestamps:true}
   );

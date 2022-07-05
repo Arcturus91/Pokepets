@@ -2,7 +2,7 @@ const router = require("express").Router();
 const User = require("../models/User.model");
 const mongoose = require("mongoose");
 const fileUploader = require('../config/cloudinary.config');
-
+const {checkRole} = require("../middleware/customMiddleware")
 // How many rounds should bcrypt run the salt (default [10 - 12 rounds])
 const saltRounds = 10;
 
@@ -132,7 +132,7 @@ router.get("/profile/:id", (req, res, next) => {
     return res.render("auth/userSignup"); // quiza sería ideal tener signup / login en uno solo
   }
 
-  console.log("estoy logeado ", req.session.currentUser);
+ 
 
   const { id } = req.params;
 
@@ -174,11 +174,14 @@ res.render("auth/adoptSuccess",  user);})
 
 
 
-router.get("/deletePet/:id", (req, res, next) => {
+router.get("/deletePet/:id", checkRole(["ADMIN"]), (req, res, next) => {
+
+  console.log("yo soy el user antes de borrar", req.session.currentUser)
   if (!req.session.currentUser) {
     return res.render("auth/userSignup"); // quiza sería ideal tener signup / login en uno solo
   }
   const { id } = req.params;
+
 
   Pet.findByIdAndDelete(id)
   .then(deleted =>{
