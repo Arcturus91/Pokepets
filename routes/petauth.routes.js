@@ -101,8 +101,8 @@ router.post("/createNewPet", fileUploader.single('profile_pic'), isLoggedOut, (r
     size,
     weight,
     sex,
-    address,
-     _rescuer
+    address,/*
+     _rescuer*/
   })
     .then((newpet) => {
       res.redirect("/");
