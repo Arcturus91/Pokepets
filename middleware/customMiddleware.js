@@ -1,12 +1,12 @@
 //creamos un middleware para checar los roles que tienen permitido acceder o realizar daterminadas acciones
 
-                //["ADMIN,"STAFF"]
+                //["ADMIN,"User"]
 exports.checkRole =(arrayRoles) => {
 
 return (req,res,next)=>{
     //voy a sacar de mi req.session al user logged para saber qe rol tiene
 
-    const { role} = req.session.user
+    const { role} = req.session.currentUser
     if(arrayRoles.includes(role)){
         return next()
     } else {
