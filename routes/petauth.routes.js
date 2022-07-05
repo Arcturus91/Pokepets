@@ -32,11 +32,13 @@ router.post("/createNewPet", fileUploader.single('profile_pic'), isLoggedOut, (r
   const { petName, petType, size, weight, sex, address } =
     req.body;
 
+    console.log("la info que subno al crear un pet", req.body)
 
+    let _rescuer
     if (req.session.currentUser){
-      let _rescuer = req.session.currentUser._id
+       _rescuer = req.session.currentUser._id
     } else {
-      let _rescuer = ""
+       _rescuer = "an increible nice soul"
     }
 
   if (!petName) {
@@ -99,8 +101,8 @@ router.post("/createNewPet", fileUploader.single('profile_pic'), isLoggedOut, (r
     size,
     weight,
     sex,
-    address/*,
-     _rescuer */
+    address,
+     _rescuer
   })
     .then((newpet) => {
       res.redirect("/");
@@ -167,6 +169,27 @@ res.render("auth/adoptSuccess",  user);})
     });
 });
 
+
+// DELETE PET
+
+
+
+router.get("/deletePet/:id", (req, res, next) => {
+  if (!req.session.currentUser) {
+    return res.render("auth/userSignup"); // quiza sería ideal tener signup / login en uno solo
+  }
+  const { id } = req.params;
+
+  Pet.findByIdAndDelete(id)
+  .then(deleted =>{
+    console.log("pet deleted")
+    res.redirect("/")
+  })
+  .catch(err => {
+    console.log("pet delete error",err)
+  })
+
+})
 
 
 

@@ -11,13 +11,12 @@ const petSchema = new Schema(
     petType:{
       type: String,
       required: true,
-      enum:["Gato","Perro"],
+      enum:["Cat","Dog"],
     },
     profile_pic: {
       type: String,
       required: true,
-      default:
-        "https://res.cloudinary.com/dhgfid3ej/image/upload/v1558806705/asdsadsa_iysw1l.jpg",
+      
     },
     size:{
       type: String,
@@ -30,7 +29,7 @@ const petSchema = new Schema(
     sex:{
       type: String,
       required: true,
-      enum:["Macho","Hembra"],
+      enum:["Male","Female"],
     },
     address:{
       type: String,
