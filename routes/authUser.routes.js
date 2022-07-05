@@ -2,7 +2,7 @@ const router = require('express').Router();
 const User = require('../models/User.model');
 const bcryptjs = require('bcryptjs');
 const fileUploader = require('../config/cloudinary.config');
-
+const mongoose = require('mongoose');
 
 router.get('/signup',(req,res,next)=>{
     console.log('Llegaste a la ruta de logueo')
@@ -22,10 +22,12 @@ router.post('/signup',fileUploader.single('profile_pic'),(req,res,next)=>{
 
     let {username,lastname,password,number,email,profile_pic} = req.body;
 
-   
+    
 
-    if(!profile_pic){
+    if(!req.file||!profile_pic){
        profile_pic = "https://res.cloudinary.com/dhgfid3ej/image/upload/v1558806705/asdsadsa_iysw1l.jpg"
+    }else{
+        profile_pic= req.file.path
     }
     console.log('que es el req.body: ',req.body)
     if(!username||!lastname||!password||!number||!email){
@@ -48,7 +50,7 @@ router.post('/signup',fileUploader.single('profile_pic'),(req,res,next)=>{
             password:hashedPassword,
             number,
             email,
-            profile_pic:req.file.path
+            profile_pic
         })
     .then(userFromDB =>{
         console.log('New user create', userFromDB)
@@ -60,11 +62,11 @@ router.post('/signup',fileUploader.single('profile_pic'),(req,res,next)=>{
     .catch(error =>{
         console.log('Ha salido un error en el post ID',error)
         if(error instanceof mongoose.Error.ValidationError){
-            res.status(500).render('auth/userSingup',{
+            res.status(500).render('auth/userSignup',{
                 errorMessage:error.message
             });
         }else if(error.code===11000){
-            res.status(500).render('auth/userSingup',{
+            res.status(500).render('auth/userSignup',{
                 errorMessage: 'El correo debe ser unico'
             })
         }else{

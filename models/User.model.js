@@ -1,5 +1,9 @@
 const { Schema, model, SchemaType, SchemaTypes } = require("mongoose");
 
+const validateEmail = function(email) {
+  const re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+  return re.test(email)
+  }; 
 // TODO: Please make sure you edit the user model to whatever makes sense in this case
 const userSchema = new Schema(
   {
@@ -17,7 +21,7 @@ const userSchema = new Schema(
     type: String,
     required: true  
     },
-  _comments: [{type:Schema.Types.ObjectId, ref:'Comment'}],
+  //_comments: [{type:Schema.Types.ObjectId, ref:'Comment'}],
   _pets: [{type:Schema.Types.ObjectId, ref:'Pet'}],
   number:{
     type: Number,
@@ -26,11 +30,12 @@ const userSchema = new Schema(
     },
   email: {
     type: String,
-    match: [/^\S+@\S+\.\S+$/, 'Por favor ingresa un correo valido'],
+    match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Por favor ingresa un correo valido'],
     trim: true,
     lowercase: true,
     unique: true,
-    required: true
+    required: true,
+    validate: [validateEmail, 'Please fill a valid email address'],
     },
   profile_pic: {
     type: String,
