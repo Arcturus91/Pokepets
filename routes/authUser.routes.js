@@ -17,7 +17,13 @@ router.get('/signup',(req,res,next)=>{
 });
 
 router.post('/signup',fileUploader.single('profile_pic'),(req,res,next)=>{
+
+    console.log("req.file",req.file) //esto está pasando como undefined 
+
     let {username,lastname,password,number,email,profile_pic} = req.body;
+
+   
+
     if(!profile_pic){
        profile_pic = "https://res.cloudinary.com/dhgfid3ej/image/upload/v1558806705/asdsadsa_iysw1l.jpg"
     }
