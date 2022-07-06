@@ -41,7 +41,6 @@ const userSchema = new Schema(
     type: String,
     default: "https://res.cloudinary.com/dhgfid3ej/image/upload/v1558806705/asdsadsa_iysw1l.jpg"
   },
-  ////////////////////////////////////////////////////////////////////////
   role:{
     type:String,
     enum:["ADMIN","USER"],

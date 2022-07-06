@@ -4,14 +4,19 @@
 <p>Number: {{user.number}}</p>
 <P>Email: {{user.email}}</P>
 
-
 {{#each user._pets}}
+
+<img src="{{profile_pic}}"  width="20%" height="auto" alt="userPic">
 
 <h1>{{petType}} {{petName}}</h1>
 <p>{{sex}}</p>
-<img src="{{profile_pic}}"  width="20%" height="auto" alt="userPic">
 
 {{/each}}
+
+{{#if user.role}}
+    <button type="submit"><a href="/auth/listUsers">Check Users</a></button>    
+{{/if}}
+
 
 <button type="submit"><a href="/auth/editUser/{{user.id}}">Edit User</a></button>
 
@@ -23,4 +28,3 @@
 {{else}}
 <p>The user is not logged in</p>
 {{/if}}
-

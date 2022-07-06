@@ -1,0 +1,24 @@
+<div id="form">
+    <h2>Edit {{username}} {{lastname}}</h2>
+    <form action="/auth/editUser/{{_id}}" method="POST" enctype="multipart/form-data">
+        <label for="">Number phone:
+             <input type="number" name="number" value="{{number}}">
+        </label>
+
+        <label for="">Email:
+             <input type="email" name="email" value="{{email}}">
+        </label>
+
+        <label for="">Image:
+             <input type="file" name="profile_pic">
+        </label>
+
+        <button type="submit">Update</button>
+    </form>
+</div>
+
+{{#if errorMessage}}
+{{errorMessage}}
+<br>
+<img src="https://c.tenor.com/KLAHPW3-BaQAAAAC/loading-error.gif" alt="">
+{{/if}}
