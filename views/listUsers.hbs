@@ -1,0 +1,30 @@
+<div class="album py-5 bg-light">
+
+    <h1>List of Users</h1>
+
+<br>
+<a href="/">home</a>
+
+  <div class="container">
+
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 d-flex justify-content-center">
+    
+      {{#each users}}
+        <ul>
+            <img src="{{profile_pic}}" alt="" srcset="">
+            <li>{{username}} {{lastname}}</li>
+            <li>{{email}}</li>
+            <li>{{number}}</li>
+            <li>{{#each _pets}}
+                <ul>
+                    <li>{{petType}}: {{petName}}</li>
+                    <img src="{{profile_pic}}" alt="" srcset="" width="125px" height="125px">
+                </ul>
+                {{/each}}</li>
+           <a href="/auth/deleteUser/{{_id}}" class="btn btn-danger">Delete</a>
+        </ul>
+      {{/each}}
+
+    </div>
+  </div>
+</div>

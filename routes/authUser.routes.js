@@ -3,12 +3,13 @@ const User = require('../models/User.model');
 const bcryptjs = require('bcryptjs');
 const fileUploader = require('../config/cloudinary.config');
 const mongoose = require('mongoose');
+const {checkRole} = require("../middleware/customMiddleware")
 
+//Create user
 router.get('/signup',(req,res,next)=>{
     console.log('Llegaste a la ruta de logueo')
     console.log('El req.session', req.session);
     if (req.session.currentUser) {
-        console.log("req.session.currentUser: ", req.session.currentUser)
         return res.redirect(`user/userProfile/${req.session.currentUser._id}`)
       }
     //console.log("req.session.currentUser: ", req.session.currentUser)
@@ -18,11 +19,7 @@ router.get('/signup',(req,res,next)=>{
 
 router.post('/signup',fileUploader.single('profile_pic'),(req,res,next)=>{
 
-    console.log("req.file",req.file) //esto está pasando como undefined 
-
     let {username,lastname,password,number,email,profile_pic} = req.body;
-
-    
 
     if(!req.file||!profile_pic){
        profile_pic = "https://res.cloudinary.com/dhgfid3ej/image/upload/v1558806705/asdsadsa_iysw1l.jpg"
@@ -56,8 +53,7 @@ router.post('/signup',fileUploader.single('profile_pic'),(req,res,next)=>{
         console.log('New user create', userFromDB)
         req.session.currentUser = userFromDB
         console.log('El req.session: ', req.session);
-        res.redirect(`user/userProfile/${userFromDB._id}`)
-        
+        res.redirect(`user/userProfile/${userFromDB._id}`) 
     })
     .catch(error =>{
         console.log('Ha salido un error en el post ID',error)
@@ -75,9 +71,9 @@ router.post('/signup',fileUploader.single('profile_pic'),(req,res,next)=>{
     })
 })
 
+//Show your profile
 router.get('/user/userProfile/:id',(req,res,next)=>{
     const {id} = req.params;
-   
     User.findById(id)
     .populate('_pets') //add _commets
     .then(user =>{
@@ -90,7 +86,13 @@ router.get('/user/userProfile/:id',(req,res,next)=>{
     })
 })
 
+//Login User
 router.get('/login',(req,res,next)=>{
+    console.log('currentUser: ',req.session.currentUser)
+    if (req.session.currentUser) {
+        return res.redirect(`user/userProfile/${req.session.currentUser._id}`)
+      }
+    console.log('fuera del if para login')
     res.render('auth/userLogin')
 })
 
@@ -120,7 +122,46 @@ router.post('/login', (req,res,next)=>{
     })
 })
 
+//Show list's users only ADMIN
+router.get("/listUsers",checkRole(['ADMIN']),(req, res,next)=>{
+    console.log('Estas en get listUsers')
+    User.find()
+    .populate('_pets')
+    .then((users) => {
+        res.render("listUsers", { users });
+    })
+    .catch((error) => {
+        console.log("error", error);
+        next();
+    });
+});
 
+//Delete users
+router.get('/deleteUser/:id',checkRole(['ADMIN']),(req, res, next)=>{
+    const { id } = req.params; 
+    User.findByIdAndDelete(id)
+    .then(()=>{
+        console.log('User delete');
+    })
+    /*.then(() => {
+        console.log("User delete")
+        //res.redirect('auth/listUsers')
+        //res.render('auth/listUsers')
+        //res.render('listUsers')
+        //res.redirect('listUsers')
+    }) */
+    User.find()
+    .populate('_pets')
+    .then((users) => {
+        res.render("listUsers", { users });
+    })
+    .catch(err => {
+      console.log('user delete error',err)
+    })
+  
+  })
+
+//Kill session
 router.post('/logout', (req, res, next) => {
     req.session.destroy(err => {
         console.log('Destruyendo la sesion');
@@ -129,7 +170,5 @@ router.post('/logout', (req, res, next) => {
     });
     console.log('Sesion destruida');
   });
-
-
 
 module.exports = router;
