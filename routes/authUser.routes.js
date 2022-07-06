@@ -5,6 +5,10 @@ const fileUploader = require('../config/cloudinary.config');
 const mongoose = require('mongoose');
 const {checkRole} = require("../middleware/customMiddleware")
 
+const isLoggedOut = require("../middleware/isLoggedOut");
+const isLoggedIn = require("../middleware/isLoggedIn");
+const { reset } = require('nodemon');
+
 //Create user
 router.get('/signup',(req,res,next)=>{
     console.log('Llegaste a la ruta de logueo')
@@ -12,30 +16,30 @@ router.get('/signup',(req,res,next)=>{
     if (req.session.currentUser) {
         return res.redirect(`user/userProfile/${req.session.currentUser._id}`)
       }
-    //console.log("req.session.currentUser: ", req.session.currentUser)
-
     res.render('auth/userSignup')
 });
 
-router.post('/signup',fileUploader.single('profile_pic'),(req,res,next)=>{
-
-    let {username,lastname,password,number,email,profile_pic} = req.body;
+router.post('/signup',fileUploader.single('profile_pic'),(req,res)=>{
 
     if(!req.file||!profile_pic){
        profile_pic = "https://res.cloudinary.com/dhgfid3ej/image/upload/v1558806705/asdsadsa_iysw1l.jpg"
     }else{
         profile_pic= req.file.path
     }
+
+    const {username,lastname,password,number,email} = req.body;
+
     console.log('que es el req.body: ',req.body)
-    if(!username||!lastname||!password||!number||!email){
-        res.render('auth/userSignup',{errorMessage:'Los campos de username, lastname, email y password deben ser llenados'})
+    if(!username||!lastname||!number||!email||!password){
+        console.log('ERROR en los datos de validacion para el post de sigup')
+        res.render('auth/userSignup',{
+            errorMessage:'All fields are required'
+        })
         return;
     }
     const regex = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/;
     if(!regex.test(password)){
-        res
-        .status(500)
-        .render('auth/userSingup',{errorMessage:'El password necesita tener al menos ocho caracteres, debe contener al menos una letra mayuscula, minuscula y un numero.'})
+        res.render('auth/userSingup',{errorMessage:'The password needs to have at least eight characters, must contain at least one uppercase letter, lowercase letter and a number.'})
         return;
     }
     const salt = bcryptjs.genSaltSync(10)
@@ -58,15 +62,15 @@ router.post('/signup',fileUploader.single('profile_pic'),(req,res,next)=>{
     .catch(error =>{
         console.log('Ha salido un error en el post ID',error)
         if(error instanceof mongoose.Error.ValidationError){
-            res.status(500).render('auth/userSignup',{
+            res.render('auth/userSignup',{
                 errorMessage:error.message
             });
         }else if(error.code===11000){
-            res.status(500).render('auth/userSignup',{
-                errorMessage: 'El correo debe ser unico'
+            res.render('auth/userSignup',{
+                errorMessage: 'The email must be unique'
             })
         }else{
-            next(error)
+            console.log('Salio un error en sigup')
         }
     })
 })
@@ -77,8 +81,13 @@ router.get('/user/userProfile/:id',(req,res,next)=>{
     User.findById(id)
     .populate('_pets') //add _commets
     .then(user =>{
-        console.log('Llegaste al get de userProfile', req.session.currentUser)
-        res.render('user/userProfile',{user})
+        //console.log('Llegaste al get de userProfile', req.session.currentUser)
+        console.log('El USUARIO: ',user)
+        if( user.role === 'ADMIN'){
+            res.render('user/adminProfile',{user})
+        }else{
+            res.render('user/userProfile',{user})
+        }
     })
     .catch(error =>{
         console.log('Ha salido un error en el get ID',error)
@@ -92,7 +101,6 @@ router.get('/login',(req,res,next)=>{
     if (req.session.currentUser) {
         return res.redirect(`user/userProfile/${req.session.currentUser._id}`)
       }
-    console.log('fuera del if para login')
     res.render('auth/userLogin')
 })
 
@@ -100,7 +108,7 @@ router.post('/login', (req,res,next)=>{
     const {email, password} = req.body;
     if(!email||!password){
         res.render('auth/userLogin',{
-            errorMessage:'I need email  y password'
+            errorMessage:'All fields are required'
         });
         return;
     }
@@ -113,7 +121,9 @@ router.post('/login', (req,res,next)=>{
         }else if(bcryptjs.compareSync(password,user.password)){
             res.redirect(`/auth/user/userProfile/${user._id}`);
         }else{
-            res.render('auth/userLogin')
+            res.render('auth/userLogin',{
+                errorMessage:'Wrong username or password'
+            })
         }
     })
     .catch(error =>{
@@ -170,5 +180,61 @@ router.post('/logout', (req, res, next) => {
     });
     console.log('Sesion destruida');
   });
+
+//Edit user
+router.get('/editUser/:id',(req,res,next)=>{
+    console.log('Llegaste a la ruta de editUser')
+    let user = req.session.currentUser
+    if(!user){
+        res.render('auth/userLogin')
+        return;
+    }
+    User.findById(user._id)
+    .then(userFromDB=>{
+        //console.log('userFromDB',userFromDB)
+         res.render('user/editUser',userFromDB)
+         return;  
+    })
+    .catch(error=>console.log('Ha salido un error en GET edit user'))
+});
+
+ router.post('/editUser/:id',fileUploader.single('profile_pic'),(req,res,next)=>{
+    const {number,email} = req.body;
+    const {id} = req.params
+    console.log("EL ID:", id)
+    if(!req.file||!profile_pic){
+       profile_pic = "https://res.cloudinary.com/dhgfid3ej/image/upload/v1558806705/asdsadsa_iysw1l.jpg"
+    }else{
+        profile_pic= req.file.path
+    }
+    console.log('que es el req.body: ',req.body)
+    if(!number||!email){
+        res.render('auth/editUser',{errorMessage:'The email and password fields must be filled'})
+        return;
+    }
+    User.findByIdAndUpdate(id,{number,email,profile_pic},{new:true})
+    .then(userUpdate =>{
+        console.log('New user create', userUpdate)
+        req.session.currentUser = userUpdate
+        console.log('El req.session: ', req.session);
+        res.redirect(`/auth/user/userProfile/${id}`) 
+    })
+    .catch(error =>{
+        console.log('Ha salido un error en el post update',error)
+        if(error instanceof mongoose.Error.ValidationError){
+            reset.render('auth/userSignup',{
+                errorMessage:error.message
+            });
+        }else if(error.code===11000){
+            res.render('auth/userSignup',{
+                errorMessage: 'The email must be unique'
+            })
+        }else{
+            res.render('auth/userSignup',{
+                errorMessage: 'The email must be unique'
+            })
+        }
+    })
+})
 
 module.exports = router;
