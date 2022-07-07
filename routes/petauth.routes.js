@@ -29,7 +29,7 @@ router.post("/createNewPet", fileUploader.single('profile_pic'), isLoggedOut, (r
 
   console.log("req.file",req.file)
 
-  const { petName, petType, size, weight, sex, address } =
+  const { petName, petType, size, weight, sex, address,longitude, latitude } =
     req.body;
 
     console.log("la info que subno al crear un pet", req.body)
@@ -101,7 +101,11 @@ router.post("/createNewPet", fileUploader.single('profile_pic'), isLoggedOut, (r
     size,
     weight,
     sex,
-    address,/*
+    address,
+    location: {
+      type: 'Point',
+      coordinates: [longitude, latitude]
+    }/*
      _rescuer*/
   })
     .then((newpet) => {
@@ -125,14 +129,22 @@ router.get("/listPets", (req, res) => {
     });
 });
 
+router.get('/listPets/api', (req, res, next) => {
+	Pet.find({}, (error, allPetsFromDB) => {
+		if (error) { 
+			next(error); 
+		} else { 
+			res.status(200).json({ pets: allPetsFromDB });
+		}
+	});
+});
+
 //Perfil único del pet
 
 router.get("/profile/:id", (req, res, next) => {
   if (!req.session.currentUser) {
     return res.render("auth/userSignup"); // quiza sería ideal tener signup / login en uno solo
   }
-
- 
 
   const { id } = req.params;
 
@@ -145,6 +157,24 @@ router.get("/profile/:id", (req, res, next) => {
       next();
     });
 });
+
+
+// to see raw data in your browser, just go on: http://localhost:3000/profile/api/62c718f0d0e9b4eb8b270a35
+router.get('/profile/api/:id', (req, res, next) => {
+	let petId = req.params.id;
+	Pet.findOne({_id: petId}, (error, onePetFromDB) => {
+		if (error) { 
+			next(error) 
+		} else { 
+			res.status(200).json({ pet: onePetFromDB}); 
+
+		}
+	});
+});
+
+
+
+
 
 //Adopt
 
