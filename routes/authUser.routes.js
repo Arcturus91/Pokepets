@@ -209,7 +209,8 @@ router.get('/editUser/:id',(req,res,next)=>{
     }
     console.log('que es el req.body: ',req.body)
     if(!number||!email){
-        res.render('auth/editUser',{errorMessage:'The email and password fields must be filled'})
+        console.log('error de numero y correo')
+        res.render('user/editUser',{errorMessage:'The email and password fields must be filled'})
         return;
     }
     User.findByIdAndUpdate(id,{number,email,profile_pic},{new:true})
