@@ -230,7 +230,9 @@ router.get('/editUser/:id',(req,res,next)=>{
                 errorMessage: 'The email must be unique'
             })
         }else{
-            next(error)
+            res.render('auth/userSignup',{
+                errorMessage: 'The email must be unique'
+            })
         }
     })
 })
