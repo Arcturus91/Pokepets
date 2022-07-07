@@ -34,11 +34,17 @@
 
 <a href="/editPet/{{_id}}"> Edit </a>
 
-
+<div id="map"></div>
 
 {{#if errorMessage}}
    {{errorMessage}}
 {{/if}}
+
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=KEY"></script>
+
+<script type="text/javascript" src="/js/petLocation.js"></script>
+
 
 
 
