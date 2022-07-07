@@ -172,8 +172,6 @@ res.render("auth/adoptSuccess",  user);})
 
 // DELETE PET
 
-
-
 router.get("/deletePet/:id", checkRole(["ADMIN"]), (req, res, next) => {
 
   console.log("yo soy el user antes de borrar", req.session.currentUser)
@@ -193,6 +191,8 @@ router.get("/deletePet/:id", checkRole(["ADMIN"]), (req, res, next) => {
   })
 
 })
+
+
 
 
 
