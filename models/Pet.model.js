@@ -35,7 +35,7 @@ const petSchema = new Schema(
       type: String,
       required: true,
     },
-    _rescuer: { 
+    _register: { 
       type:Schema.Types.ObjectId,
       ref:"User"
   },

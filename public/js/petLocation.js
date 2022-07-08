@@ -1,3 +1,9 @@
+
+//require
+//findbyid
+//extraigo lat,long
+
+
 window.addEventListener('load', () => {
   const initLocation = {
     lat: -12.0547601,

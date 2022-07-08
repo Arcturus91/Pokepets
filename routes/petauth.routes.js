@@ -34,13 +34,6 @@ router.post("/createNewPet", fileUploader.single('profile_pic'), isLoggedOut, (r
 
     console.log("la info que subno al crear un pet", req.body)
 
-    let _rescuer
-    if (req.session.currentUser){
-       _rescuer = req.session.currentUser._id
-    } else {
-       _rescuer = "an increible nice soul"
-    }
-
   if (!petName) {
     return res.status(400).render("createNewPet", {
       errorMessage: "Please provide your pet name.",
@@ -105,13 +98,22 @@ router.post("/createNewPet", fileUploader.single('profile_pic'), isLoggedOut, (r
     location: {
       type: 'Point',
       coordinates: [longitude, latitude]
-    }/*
-     _rescuer*/
+    }
   })
     .then((newpet) => {
-      res.redirect("/");
-      console.log("pet creado con éxito", newpet);
+
+      if (req.session.currentUser){
+        User.findByIdAndUpdate(req.session.currentUser._id, { $push: { _registered_pets: newpet._id } })
+        .then((user) => {
+Pet.findByIdAndUpdate(newpet._id,{ _register: user._id })
+.then(pet=>{
+  console.log("the updated user and pet ", user, pet);
+res.redirect("/");
     })
+  })} else {
+    res.redirect("/");
+    console.log("new pet creado sin rescuer", newpet)
+  }})
     .catch((error) => {
       console.log("error creando pet", error);
     });
@@ -119,6 +121,7 @@ router.post("/createNewPet", fileUploader.single('profile_pic'), isLoggedOut, (r
 
 router.get("/listPets", (req, res) => {
   Pet.find()
+  .populate('_register')
     .then((pets) => {
       console.log("los perros ", pets);
       res.render("listPets", { pets });
@@ -149,7 +152,9 @@ router.get("/profile/:id", (req, res, next) => {
   const { id } = req.params;
 
   Pet.findById(id)
+  .populate('_register')
     .then((pet) => {
+      console.log("detalle del pet", pet)
       res.render("auth/profilePet", pet);
     })
     .catch((err) => {
