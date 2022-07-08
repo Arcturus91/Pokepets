@@ -22,7 +22,8 @@ const userSchema = new Schema(
     required: true  
     },
   //_comments: [{type:Schema.Types.ObjectId, ref:'Comment'}],
-  _pets: [{type:Schema.Types.ObjectId, ref:'Pet'}],
+  _pets: [{type:Schema.Types.ObjectId, ref:'Pet'}], // mascotas adoptadas 
+  _registered_pets: [{type:Schema.Types.ObjectId, ref:'Pet'}], // mascotas registradas
   number:{
     type: Number,
     unique: true,

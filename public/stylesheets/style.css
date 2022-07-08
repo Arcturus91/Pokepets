@@ -10,3 +10,18 @@ a {
 h1 {
   color: 15px;
 }
+
+#map {
+  width: auto;
+  height: 500px;
+}
+
+#map1 {
+  width: auto;
+  height: 500px;
+}
+
+#map0 {
+  width: auto;
+  height: 500px;
+}

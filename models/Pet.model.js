@@ -35,7 +35,7 @@ const petSchema = new Schema(
       type: String,
       required: true,
     },
-    _rescuer: { 
+    _register: { 
       type:Schema.Types.ObjectId,
       ref:"User"
   },
@@ -46,7 +46,8 @@ const petSchema = new Schema(
   _comments:{
   type:Schema.Types.ObjectId,
   ref:"Comment"
-}
+},
+location: { type: { type: String }, coordinates: [Number] }
 
   },
   {
@@ -54,6 +55,8 @@ const petSchema = new Schema(
     timestamps: true,
   }
 );
+
+petSchema.index({ location: '2dsphere' });
 
 const Pet = model("Pet", petSchema);
 

@@ -2,24 +2,24 @@
 
    <label> Pet Name</label>
       <input type="text" name="petName">
-   
+   </br>
    <label> Pet Type</label>
  <select name="petType">
   <option value="Cat">Cat</option>
   <option value="Dog">Dog</option>
 </select>
 
-   
+   </br>
 <label> Profile Pic</label>
      <input type="file" name="profile_pic">
-
+</br>
    <label> Pet Size</label>
       <input type="text" name="size">
-
+</br>
       <label> Pet Weight</label>
       <input type="text" name="weight">
 
-
+</br>
 
       <label> Pet Sex</label>
 <select name="sex">
@@ -27,15 +27,62 @@
   <option value="Female">Female</option>
 </select>
 
-
+</br>
 
 
       <label> Pet address</label>
-      <input type="text" name="address">
+      <input type="text" name="address" id="addressPet" placeholder="Find your address in the Google Map" readonly>
 
 
    <button type="submit">Submit</button>
+
+
+  <label>Address</label>
+  <input type="hidden" name="latitude" placeholder="latitude" id="latResult" >
+  <input type="hidden" name="longitude" placeholder="longitude" id="longResult">
+
+
+
+
+
 </form>
+
+
+<h5>Find your place: </h5>
+
+
+<div id="map1"></div>
+<input type="text" name="" placeholder="Ubica tu dirección en el map" id="address"> 
+
+<input type="submit" name="" id="submit">
+
+
+<a href="/restaurants">Back to the list</a>
+
+
+<input type="hidden" name="lat" id="lat">
+<input type="hidden" name="long" id="long">
+
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDt7xKPA7bOxEwA0P_Mw9_0X29OS2MQB8I"></script>
+
+<script type="text/javascript" src="/js/profileMap.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 {{#if errorMessage}}
    {{errorMessage}}
