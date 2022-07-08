@@ -84,7 +84,7 @@ router.get('/user/userProfile/:id',(req,res,next)=>{
         //console.log('Llegaste al get de userProfile', req.session.currentUser)
         console.log('El USUARIO: ',user)
         if( user.role === 'ADMIN'){
-            res.render('user/adminProfile',{user})
+            res.render('user/userProfile',{user})
         }else{
             res.render('user/userProfile',{user})
         }
