@@ -4,10 +4,12 @@ const bcryptjs = require('bcryptjs');
 const fileUploader = require('../config/cloudinary.config');
 const mongoose = require('mongoose');
 const {checkRole} = require("../middleware/customMiddleware")
+const nodemailer = require("nodemailer")
 
 const isLoggedOut = require("../middleware/isLoggedOut");
 const isLoggedIn = require("../middleware/isLoggedIn");
-const { reset } = require('nodemon');
+
+//const { reset } = require('nodemon');
 
 //Create user
 router.get('/signup',(req,res,next)=>{
@@ -199,7 +201,7 @@ router.get('/editUser/:id',(req,res,next)=>{
 });
 
  router.post('/editUser/:id',fileUploader.single('profile_pic'),(req,res,next)=>{
-    const {number,email} = req.body;
+    const {number,email,password} = req.body;
     const {id} = req.params
     console.log("EL ID:", id)
     if(!req.file||!profile_pic){
@@ -208,12 +210,14 @@ router.get('/editUser/:id',(req,res,next)=>{
         profile_pic= req.file.path
     }
     console.log('que es el req.body: ',req.body)
-    if(!number||!email){
+    if(!number||!email||!password){
         console.log('error de numero y correo')
-        res.render('user/editUser',{errorMessage:'The email and password fields must be filled'})
+        res.render('user/editUser',{errorMessage:'The number, email and password fields must be filled'})
         return;
     }
-    User.findByIdAndUpdate(id,{number,email,profile_pic},{new:true})
+    const salt = bcryptjs.genSaltSync(10)
+    const hashedPassword = bcryptjs.hashSync(password,salt)
+    User.findByIdAndUpdate(id,{number,email,profile_pic,password:hashedPassword},{new:true})
     .then(userUpdate =>{
         console.log('New user create', userUpdate)
         req.session.currentUser = userUpdate
@@ -223,7 +227,8 @@ router.get('/editUser/:id',(req,res,next)=>{
     .catch(error =>{
         console.log('Ha salido un error en el post update',error)
         if(error instanceof mongoose.Error.ValidationError){
-            reset.render('auth/userSignup',{
+            //reset
+            res.render('auth/userSignup',{
                 errorMessage:error.message
             });
         }else if(error.code===11000){
@@ -235,6 +240,58 @@ router.get('/editUser/:id',(req,res,next)=>{
                 errorMessage: 'The email must be unique'
             })
         }
+    })
+})
+
+//Send email for password
+router.get('/sendEmail',(req,res,next)=>{
+    res.render('auth/userSendEmail')
+})
+
+router.post('/sendEmail',(req,res,next)=>{
+    let { email } = req.body;
+    User.findOne({email})
+    .then(userFromDB=>{
+        if(!userFromDB){
+            res.render('auth/userSendEmail',{
+                errorMessage:'Try again'
+                
+            })
+            return
+        }else{
+            let randomString = Math.random().toString(36).slice(-8);
+            randomString = randomString.charAt(0).toUpperCase() + randomString.slice(1)
+            let transporter = nodemailer.createTransport({
+                host:'smtp.gmail.com',
+                port: process.env.PORT_MAIL,
+                secure:false,
+                auth:{
+                    user: `${process.env.USER_MAIL}`,
+                    pass: `${process.env.PASS_MAIL}`
+                }
+            });
+            transporter.sendMail({
+                from:'"🐱 Pokepets 🐶" <pokepetsweb@gmail.com>',
+                to: email,
+                subject: 'New pass for web Pokepets',
+                html: `<h3>Your new password is:</h3>
+                       <br>
+                       <b>${randomString}</b>
+                       <br>
+                       <p>
+                       Please after receiving the password change it for your security<p>`
+            })
+            const salt = bcryptjs.genSaltSync(10)
+            const hashedPassword = bcryptjs.hashSync(randomString,salt)
+            User.findOneAndUpdate({email},{password:hashedPassword},{new:true})
+            .then(userUpdate =>{
+                console.log('User update password', userUpdate)
+            })
+            res.render('checkMail.hbs')
+        }
+    })
+    .catch(error =>{
+        console.log('Ha salido un error en el post sendMail', error)
     })
 })
 

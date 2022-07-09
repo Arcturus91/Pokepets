@@ -1,0 +1,13 @@
+<form action="/auth/sendEmail" method="post">
+    <label for="">Enter your email:</label>
+    <input type="email" name="email">
+    <button type="submit">Send</button>
+</form>
+
+
+{{#if errorMessage}}
+ <br>
+ <p>{{errorMessage}}</p>
+ <br>
+ <img src="https://c.tenor.com/0l5yo_M168EAAAAC/capoo-thinking.gif" alt="">
+{{/if}}
