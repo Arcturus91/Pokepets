@@ -23,10 +23,19 @@ router.get('/signup',(req,res,next)=>{
 
 router.post('/signup',fileUploader.single('profile_pic'),(req,res)=>{
 
-    if(!req.file||!profile_pic){
+    let profile_pic;
+
+    if(!req.file){
+        console.log("error creating account con picture")
+/*         console.log("yo soy req.file", req.file)
+        console.log("yo soy profile_pic", profile_pic) */
        profile_pic = "https://res.cloudinary.com/dhgfid3ej/image/upload/v1558806705/asdsadsa_iysw1l.jpg"
     }else{
+        console.log("creating account con picture")
+
         profile_pic= req.file.path
+        console.log("creating account con picture", profile_pic)
+
     }
 
     const {username,lastname,password,number,email} = req.body;
@@ -204,10 +213,14 @@ router.get('/editUser/:id',(req,res,next)=>{
     const {number,email,password} = req.body;
     const {id} = req.params
     console.log("EL ID:", id)
-    if(!req.file||!profile_pic){
+
+
+    let profile_pic
+    if(!req.file){
        profile_pic = "https://res.cloudinary.com/dhgfid3ej/image/upload/v1558806705/asdsadsa_iysw1l.jpg"
     }else{
         profile_pic= req.file.path
+        console.log("la pic de cloudinary", profile_pic)
     }
     console.log('que es el req.body: ',req.body)
     if(!number||!email||!password){
