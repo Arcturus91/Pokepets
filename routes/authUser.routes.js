@@ -164,13 +164,6 @@ router.get('/deleteUser/:id',checkRole(['ADMIN']),(req, res, next)=>{
     .then(()=>{
         console.log('User delete');
     })
-    /*.then(() => {
-        console.log("User delete")
-        //res.redirect('auth/listUsers')
-        //res.render('auth/listUsers')
-        //res.render('listUsers')
-        //res.redirect('listUsers')
-    }) */
     User.find()
     .populate('_pets')
     .then((users) => {
