@@ -10,7 +10,7 @@ return (req,res,next)=>{
     if(arrayRoles.includes(role)){
         return next()
     } else {
-        return res.status(403).send("no tienes el nivel requerido para esta accion")
+        return res.status(403).send("you don't have permission for this action")
     }
 
 

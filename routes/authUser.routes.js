@@ -90,7 +90,7 @@ router.post('/signup',fileUploader.single('profile_pic'),(req,res)=>{
 router.get('/user/userProfile/:id',(req,res,next)=>{
     const {id} = req.params;
     User.findById(id)
-    .populate('_pets') //add _commets
+    .populate('_pets _registered_pets') //add _commets
     .then(user =>{
         //console.log('Llegaste al get de userProfile', req.session.currentUser)
         console.log('El USUARIO: ',user)
