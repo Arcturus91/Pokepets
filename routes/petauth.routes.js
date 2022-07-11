@@ -3,6 +3,7 @@ const User = require("../models/User.model");
 const mongoose = require("mongoose");
 const fileUploader = require('../config/cloudinary.config');
 const {checkRole} = require("../middleware/customMiddleware")
+const key = process.env.GOOGLE_KEY 
 // How many rounds should bcrypt run the salt (default [10 - 12 rounds])
 const saltRounds = 10;
 
@@ -17,10 +18,12 @@ const isLoggedIn = require("../middleware/isLoggedIn");
   //Create pet GET route
 
 router.get("/createNewPet", isLoggedOut, (req, res) => {
-  res.render("createNewPet");
+  res.render("createNewPet",{key});
 });
   //Create pet POST route
 router.post("/createNewPet", fileUploader.single('profile_pic'), isLoggedOut, (req, res) => {
+
+  
 
   let profile_pic;
   if(req.file){
@@ -103,28 +106,37 @@ router.post("/createNewPet", fileUploader.single('profile_pic'), isLoggedOut, (r
     .then((newpet) => {
 
       if (req.session.currentUser){
+
         User.findByIdAndUpdate(req.session.currentUser._id, { $push: { _registered_pets: newpet._id } })
         .then((user) => {
+
+console.log("pusheo de pet al user", user)
+
 Pet.findByIdAndUpdate(newpet._id,{ _register: user._id })
 .then(pet=>{
   console.log("the updated user and pet ", user, pet);
 res.redirect("/");
     })
-  })} else {
+  })}
+  
+  
+  else {
     res.redirect("/");
-    console.log("new pet creado sin rescuer", newpet)
+
+    console.log("new pet creado sin register", newpet)
   }})
     .catch((error) => {
       console.log("error creando pet", error);
     });
 });
 
-router.get("/listPets", (req, res) => {
+router.get("/listPets", (req, res, next) => {
   Pet.find()
   .populate('_register')
     .then((pets) => {
-      console.log("los perros ", pets);
-      res.render("listPets", { pets });
+      
+      res.render("listPets",  { hbpets:pets, gkey: key })
+console.log("las mascotas" , hbpets)
     })
     .catch((error) => {
       console.log("error", error);
@@ -155,7 +167,8 @@ router.get("/profile/:id", (req, res, next) => {
   .populate('_register')
     .then((pet) => {
       console.log("detalle del pet", pet)
-      res.render("auth/profilePet", pet);
+      
+      res.render("auth/profilePet", { hbpet:pet, gkey: key });
     })
     .catch((err) => {
       console.log(err);

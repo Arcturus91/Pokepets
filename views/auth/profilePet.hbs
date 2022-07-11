@@ -9,35 +9,35 @@
 {{!-- {{aqui se verían comentariso del pet. el mapa}} --}}
 
 
-<img src="{{profile_pic}}" width="20%" height="auto" alt="Kitty" />
+<img src="{{hbpet.profile_pic}}" width="20%" height="auto" alt="Kitty" />
 
 </br>
 
-{{petName}}
-  {{petType}}
+{{hbpet.petName}}
+  {{hbpet.petType}}
     
-    {{size}}
-    {{weight}}
-    {{sex}}
+    {{hbpet.size}}
+    {{hbpet.weight}}
+    {{hbpet.sex}}
 
-                   {{#if _register}}
-                  <li> register name : {{_register.username}}</li>
-                  <li>Register email: {{_register.email}}</li>
+                   {{#if hbpet._register}}
+                  <li> register name : {{hbpet._register.username}}</li>
+                  <li>Register email: {{hbpet._register.email}}</li>
                 {{/if}}
 
 
 
 </br>
 
-<a href="/adoptSuccess/{{_id}}"> Adopt </a>
+<a href="/adoptSuccess/{{hbpet._id}}"> Adopt </a>
 
 </br>
 
-<a href="/deletePet/{{_id}}"> Delete </a>
+<a href="/deletePet/{{hbpet._id}}"> Delete </a>
 
 </br>
 
-<a href="/editPet/{{_id}}"> Edit </a>
+<a href="/editPet/{{hbpet._id}}"> Edit </a>
 
 <div id="map"></div>
 
@@ -46,7 +46,7 @@
 {{/if}}
 
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDt7xKPA7bOxEwA0P_Mw9_0X29OS2MQB8I"></script>
+<script src="{{gkey}}"></script>
 
 <script type="text/javascript" src="/js/petLocation.js"></script>
 
