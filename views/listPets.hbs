@@ -13,9 +13,13 @@
       class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 d-flex justify-content-center"
     >
 
-      {{#each pets}}
+      {{#each hbpets}}
 
-        {{#if this._adopter}}{{else}}
+        {{#if _adopter}}
+        
+        
+        {{else}}
+
           <div class="card text-center m-5" style="width: 18rem;">
 
             <img class="card-img-top" src="{{profile_pic}}" alt="Kitty" />
@@ -47,12 +51,15 @@
     </div>
   </div>
 
+ 
+
   <div id="map0"></div>
 
 </div>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
 <script
-  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDt7xKPA7bOxEwA0P_Mw9_0X29OS2MQB8I"
+  src="{{gkey}}"
 ></script>
 
 <script type="text/javascript" src="/js/list.js"></script>
