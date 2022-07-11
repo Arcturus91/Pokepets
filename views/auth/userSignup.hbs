@@ -1,42 +1,78 @@
-<div id="form">
-    <h2>Signup</h2>
-    <form action="/auth/signup" method="post" enctype="multipart/form-data">
-        <label for="">Name:
-             <input type="text" name="username" placeholder="joselito">
-        </label>
+{{!-- New form --}}
+<form action="/auth/signup" method="post" enctype="multipart/form-data">
+<section class="h-100 h-custom" style="background-color: #8fc4b7;">
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-lg-8 col-xl-6">
+        <div class="card rounded-3">
+          <img src="https://thumbs.dreamstime.com/b/gato-y-perro-del-grupo-44857252.jpg"
+            class="w-100" style="border-top-left-radius: .3rem; border-top-right-radius: .3rem;"
+            alt="Sample photo">
+          <div class="card-body p-4 p-md-5">
+            <h3 class="mb-4 pb-2 pb-md-0 mb-md-5 px-md-2">Registration Info</h3>
 
-        <label for="">LastName:
-             <input type="text" name="lastname" placeholder="simpson">
-        </label>
+            <form class="px-md-2">
 
-        <label for="">Number phone:
-             <input type="number" name="number" placeholder="1234567890">
-        </label>
+              <div class="form-outline mb-4">
+                <input type="text" id="form3Example1q" class="form-control" name="username"/>
+                <label class="form-label" for="form3Example1q">Name</label>
+              </div>
 
-        <label for="">Email:
-             <input type="email" name="email" placeholder="joselito.simpson@gmail.com">
-        </label>
+              <div class="form-outline mb-4">
+                <input type="text" id="form3Example1q" class="form-control" name="lastname"/>
+                <label class="form-label" for="form3Example1q">LastName</label>
+              </div>
 
-        <label for="">Image:
-             <input type="file" name="profile_pic">
-        </label>
+              <div class="form-outline mb-4">
+                <input type="number" id="form3Example1q" class="form-control" name="number"/>
+                <label class="form-label" for="form3Example1q">Number phone</label>
+              </div>
 
-        <label for="">Password:
-            <input type="password" name="password" placeholder="*******">
-        </label>
+              <div class="form-outline mb-4">
+                <input type="email" id="form3Example1q" class="form-control" name="email"/>
+                <label class="form-label" for="form3Example1q">Email</label>
+              </div>
 
-        <button type="submit">Create</button>
-    </form>
-</div>
-<br>
-<div>
-     <p>Do you have an account?</p>
-     <button><a href="/auth/login">Access</a></button>
-</div>
+              <div class="form-outline mb-4">
+                <input type="password" id="form3Example1q" class="form-control" name="password"/>
+                <label class="form-label" for="form3Example1q">Password</label>
+              </div>
 
+              <div class="form-outline mb-4">
+                <div class="col-md-7 mb-5">
 
-{{#if errorMessage}}
-    {{errorMessage}}
-    <br>
-    <img src="https://c.tenor.com/cqnZ1RW_XjsAAAAM/horny-bonk.gif" alt="">
-{{/if}}
+                  <div class="mb-3">
+                    <label for="formFile" class="form-label">Image:</label>
+                    <input class="form-control" type="file" id="formFile" name="profile_pic">
+                  </div>
+
+                </div>
+              </div>
+
+              <button type="submit" class="btn btn-success btn-lg mb-1">Submit</button>
+
+            </form>
+          
+          <div>
+               <br>
+               <p>Do you have an account?</p>
+               <button class="btn btn-dark"><a href="/auth/login">Access</a></button>
+          </div>
+
+          <div>
+          <br>
+          {{#if errorMessage}}
+          {{errorMessage}}
+          <br>
+          <br>
+          <img src="https://c.tenor.com/cqnZ1RW_XjsAAAAM/horny-bonk.gif" alt="">
+          {{/if}}
+          </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+</form>
