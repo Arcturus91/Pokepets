@@ -25,3 +25,17 @@ h1 {
   width: auto;
   height: 500px;
 }
+
+.access a{
+  text-decoration: none;
+  color: #ffff;
+}
+
+.sendMail{
+  text-align: center;
+
+}
+
+.access a:hover{
+  color:gainsboro;
+}
