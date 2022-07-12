@@ -43,10 +43,6 @@ const petSchema = new Schema(
     type:Schema.Types.ObjectId,
     ref:"User"
 },
-  _comments:{
-  type:Schema.Types.ObjectId,
-  ref:"Comment"
-},
 location: { type: { type: String }, coordinates: [Number] }
 
   },

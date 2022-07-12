@@ -10,6 +10,9 @@ const saltRounds = 10;
 // Require the Pet model in order to interact with the database
 const Pet = require("../models/Pet.model");
 
+// Require comment model
+const Comment = require("../models/Comment.model");
+
 // Require necessary (isLoggedOut and isLiggedIn) middleware in order to control access to specific routes
 const isLoggedOut = require("../middleware/isLoggedOut");
 const isLoggedIn = require("../middleware/isLoggedIn");
@@ -28,6 +31,10 @@ router.post("/createNewPet", fileUploader.single('profile_pic'), isLoggedOut, (r
   let profile_pic;
   if(req.file){
       profile_pic = req.file.path
+  } else {
+    return res.status(400).render("createNewPet", {
+      errorMessage: "Please add a picture of the pet",
+    });
   }
 
   console.log("req.file",req.file)
@@ -144,6 +151,8 @@ console.log("las mascotas" , hbpets)
     });
 });
 
+
+
 //Axios
 
 router.get('/listPets/api', (req, res, next) => {
@@ -169,14 +178,64 @@ router.get("/profile/:id", (req, res, next) => {
   .populate('_register')
     .then((pet) => {
       console.log("detalle del pet", pet)
+
+Comment.find({_pet:id})
+.populate('_author')
+.then(comments=>{
+
+  res.render("auth/profilePet", { hbpet:pet, comments, gkey: key });
+})
+
+
+
       
-      res.render("auth/profilePet", { hbpet:pet, gkey: key });
+      
     })
     .catch((err) => {
       console.log(err);
       next();
     });
 });
+
+
+
+
+
+//Comments al profile pet
+
+router.post("/profile/:id/comment", (req, res, next) => {
+  if (!req.session.currentUser) {
+    return res.render("auth/userSignup"); // quiza sería ideal tener signup / login en uno solo
+  }
+
+  const  _author  = req.session.currentUser._id
+  const { id } = req.params;
+  const {comment} = req.body;
+
+  Comment.create({
+    _author,
+    comment,
+    _pet:id
+  }).then(comment =>{
+
+console.log("he creado un comment", comment)
+res.redirect(`/profile/${id}`)
+
+  })
+  .catch((err) => {
+    console.log(err);
+    next();
+  });
+})
+
+
+
+
+
+
+
+
+/* ***************************** */
 
 
 // to see raw data in your browser, just go on: http://localhost:3000/profile/api/62c718f0d0e9b4eb8b270a35
@@ -264,6 +323,11 @@ router.get("/editPet/:id", checkRole(["ADMIN"]), (req, res, next) => {
 })
 
 
+
+
+
+
+
 router.post("/editPet/:id", fileUploader.single('profile_pic'), (req, res, next) => {
   const { id } = req.params;
 
@@ -299,6 +363,9 @@ router.post("/editPet/:id", fileUploader.single('profile_pic'), (req, res, next)
     console.log('Ha salido un error en el post update',error)}) 
 
 })
+
+
+
 
 module.exports = router;
 

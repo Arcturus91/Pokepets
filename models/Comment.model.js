@@ -2,8 +2,9 @@ const { Schema, model } = require("mongoose");
 
 const commentSchema = new Schema(
   {
-    author: { type: Schema.Types.ObjectId, ref: "User" },
-    content: String
+    _author: { type: Schema.Types.ObjectId, ref: "User" },
+    comment: String,
+    _pet : {type: Schema.Types.ObjectId, ref: "Pet" },
   },
   {
     timestamps: true
