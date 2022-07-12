@@ -110,11 +110,11 @@ router.post("/createNewPet", fileUploader.single('profile_pic'), isLoggedOut, (r
         User.findByIdAndUpdate(req.session.currentUser._id, { $push: { _registered_pets: newpet._id } })
         .then((user) => {
 
-console.log("pusheo de pet al user", user)
+//console.log("pusheo de pet al user", user)
 
 Pet.findByIdAndUpdate(newpet._id,{ _register: user._id })
 .then(pet=>{
-  console.log("the updated user and pet ", user, pet);
+  //console.log("the updated user and pet ", user, pet);
 res.redirect("/");
     })
   })}
@@ -123,7 +123,7 @@ res.redirect("/");
   else {
     res.redirect("/");
 
-    console.log("new pet creado sin register", newpet)
+    //console.log("new pet creado sin register", newpet)
   }})
     .catch((error) => {
       console.log("error creando pet", error);
@@ -134,7 +134,7 @@ router.get("/listPets", (req, res, next) => {
   Pet.find()
   .populate('_register')
     .then((pets) => {
-      
+      let hbpets = {}
       res.render("listPets",  { hbpets:pets, gkey: key })
 console.log("las mascotas" , hbpets)
     })
@@ -143,6 +143,8 @@ console.log("las mascotas" , hbpets)
       next(); //esto me enviará a la página de errores.
     });
 });
+
+//Axios
 
 router.get('/listPets/api', (req, res, next) => {
 	Pet.find({}, (error, allPetsFromDB) => {
@@ -202,15 +204,13 @@ router.get("/adoptSuccess/:id", (req, res, next) => {
   }
   const { id } = req.params;
 
-  console.log("llegué al update")
-
   User.findByIdAndUpdate(req.session.currentUser._id, { $push: { _pets: id } })
     .then((user) => {
 
 Pet.findByIdAndUpdate(id,{ _adopter: user._id })
 .then(pet=>{console.log("the updated user and pet ", user, pet);
-res.render("auth/adoptSuccess",  user);})
-      
+res.render("auth/adoptSuccess", { userData:user , petData:pet} )})
+
     })
     .catch((error) => {
       console.log("error updating user", error);
@@ -223,6 +223,7 @@ res.render("auth/adoptSuccess",  user);})
 router.get("/deletePet/:id", checkRole(["ADMIN"]), (req, res, next) => {
 
   console.log("yo soy el user antes de borrar", req.session.currentUser)
+
   if (!req.session.currentUser) {
     return res.render("auth/userSignup"); // quiza sería ideal tener signup / login en uno solo
   }
@@ -240,60 +241,65 @@ router.get("/deletePet/:id", checkRole(["ADMIN"]), (req, res, next) => {
 
 })
 
+// EDIT PET
 
 
 
+router.get("/editPet/:id", checkRole(["ADMIN"]), (req, res, next) => {
 
-
-
-
-
-//pendinete de modificar
-router.get("/login", isLoggedOut, (req, res) => {
-  res.render("auth/login");
-});
-
-router.post("/login", isLoggedOut, (req, res, next) => {
-  const { petName } = req.body;
-
-  if (!petName) {
-    return res.status(400).render("auth/login", {
-      errorMessage: "Please provide your petName.",
-    });
+ if (!req.session.currentUser) {
+    return res.render("auth/userSignup"); // quiza sería ideal tener signup / login en uno solo
   }
 
-  // Search the database for a user with the petName submitted in the form
-  Pet.findOne({ petName })
-    .then((pet) => {
-      // If the user isn't found, send the message that user provided wrong credentials
-      if (!pet) {
-        return res.status(400).render("auth/login", {
-          errorMessage: "Wrong credentials.",
-        });
-      }
+  const { id } = req.params;
 
-      req.session.pet = pet;
-      // req.session.user = user._id; // ! better and safer but in this case we saving the entire user object
-      return res.redirect("/");
+  Pet.findById(id)
+    .then(petFromDB=>{
+        
+         res.render('auth/editPet',{ hbpet:petFromDB, gkey: key })
+         console.log('llegué a traer el pet',petFromDB)
     })
+    .catch(error=>console.log('Ha salido un error en GET edit user'))
 
-    .catch((err) => {
-      // in this case we are sending the error handling to the error handling middleware that is defined in the error handling file
-      // you can just as easily run the res.status that is commented out below
-      next(err);
-      // return res.status(500).render("login", { errorMessage: err.message });
-    });
-});
+})
 
-router.get("/logout", isLoggedIn, (req, res) => {
-  req.session.destroy((err) => {
-    if (err) {
-      return res
-        .status(500)
-        .render("auth/logout", { errorMessage: err.message });
-    }
-    res.redirect("/");
-  });
-});
+
+router.post("/editPet/:id", fileUploader.single('profile_pic'), (req, res, next) => {
+  const { id } = req.params;
+
+  let profile_pic
+
+  Pet.findById(id)
+  .then(petFromDB => {
+    profile_pic = petFromDB.profile_pic
+  })
+
+  
+  if(req.file){
+      profile_pic = req.file.path
+  }
+
+  const {sex,size,weight, address,longitude, latitude} = req.body;
+  console.log("lo qe yo mando", req.body)
+
+  Pet.findByIdAndUpdate(id,{sex,size,weight,profile_pic,
+    address,
+    location: {
+      type: 'Point',
+      coordinates: [longitude, latitude]}
+  
+  
+  },{new:true})
+  .then(updatedPet=>{
+    console.log("el pet actualizado" ,updatedPet )
+
+    res.redirect("/listPets")
+  })
+  .catch(error =>{
+    console.log('Ha salido un error en el post update',error)}) 
+
+})
 
 module.exports = router;
+
+

@@ -21,10 +21,10 @@ const petSchema = new Schema(
     size:{
       type: String,
       required: true,
+      enum:["Mini","Small","Medium","Large","Extra large"],
     },
     weight:{
-      type: String,
-      required: true,
+      type: Number
     },
     sex:{
       type: String,
