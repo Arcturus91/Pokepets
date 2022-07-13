@@ -39,3 +39,33 @@ h1 {
 .access a:hover{
   color:gainsboro;
 }
+
+input.sendEmail{
+  border: 2px solid;
+  border-radius: 8px;
+  padding: 4px;
+}
+
+ul {
+  list-style: none;
+}
+
+.home{
+  margin: 15px;
+}
+.home a{
+  text-decoration: none;
+  color: #ffff;
+}
+
+.home a:hover{
+  color:aliceblue;
+}
+
+.text-white{
+  margin: 20px;
+}
+
+.card-pet{
+  padding-right: 40px;
+}
