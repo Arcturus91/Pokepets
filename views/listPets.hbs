@@ -15,34 +15,31 @@
 
       {{#each hbpets}}
 
-        {{#if _adopter}}
-        
-        
-        {{else}}
+        {{#if _adopter}}{{else}}
 
-          <div class="card text-center m-5" style="width: 18rem;">
+          <figure class="container">
 
-            <img class="card-img-top" src="{{profile_pic}}" alt="Kitty" />
-            <div class="card-body">
-              <h5 class="card-title">{{petName}}</h5>
-              <ul>
-                <li> {{petType}}</li>
-                <li> Size: {{size}} centimeters</li>
-                <li> Weight: {{weight}} kilograms</li>
-                <li> {{sex}}</li>
-                <li> {{address}}</li>
+            <img src="{{profile_pic}}" alt="" />
+            <figcaption>
+              <h3>{{petName}}</h3>
+              <div class="card-body">
 
-                {{#if _register}}
-                  <li> El que registro la mascota  {{_register.username}}</li>
+                <ul>
+                  <li> {{sex}}</li>
+                  <li> Size: {{size}}</li>
+                  <li> Weight: {{weight}} kilograms</li>
 
-                {{/if}}
+                </ul>
+                
+                
+              <h3>  <a href="/profile/{{_id}}" class="btn btn-danger">
+                Check the
+                  adoption profile</a>
+                  </h3>
+              </div>
 
-              </ul>
-              <a href="/profile/{{_id}}" class="btn btn-danger">Check the
-                adoption profile</a>
-            </div>
-
-          </div>
+            </figcaption>
+          </figure>
 
         {{/if}}
 
@@ -51,16 +48,12 @@
     </div>
   </div>
 
- 
-
   <div id="map0"></div>
 
 </div>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
-<script
-  src="{{gkey}}"
-></script>
+<script src="{{gkey}}"></script>
 
 <script type="text/javascript" src="/js/list.js"></script>
 
