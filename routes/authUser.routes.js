@@ -281,11 +281,10 @@ router.post('/sendEmail',(req,res,next)=>{
                 to: email,
                 subject: 'New pass for web Pokepets',
                 html: `<h3>Your new password is:</h3>
-                       <br>
                        <b>${randomString}</b>
                        <br>
-                       <p>
-                       Please after receiving the password change it for your security<p>`
+                       <p>Please after receiving the password change it for your security<p>
+                       <img src='https://c.tenor.com/guTGJo0Y4QYAAAAM/puglie-pug-puglie.gif'>`
             })
             const salt = bcryptjs.genSaltSync(10)
             const hashedPassword = bcryptjs.hashSync(randomString,salt)
