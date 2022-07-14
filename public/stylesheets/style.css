@@ -95,7 +95,12 @@ figure.container.hover figcaption {
 body {
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  
 }
+
+.elBody {
+  background-color: #F9F6F0;
+} 
 
 a {
   color: #00b7ff;
@@ -162,5 +167,10 @@ ul {
 
 .card-pet{
   padding-right: 40px;
+}
+
+.imgcover{
+object-fit: contain;
+
 }
 
