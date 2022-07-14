@@ -1,98 +1,190 @@
-<form action="/createNewPet" method="POST" enctype="multipart/form-data">
+<div class="container py-5" style="background-color: #8fc4b7;">
 
-   <label> Pet Name</label>
-      <input type="text" name="petName">
-   </br>
-   <label> Pet Type</label>
- <select name="petType">
-  <option value="Cat">Cat</option>
-  <option value="Dog">Dog</option>
-</select>
+  <div class="row">
+    <div class="col">
 
-   </br>
-<label> Profile Pic</label>
-     <input type="file" name="profile_pic" required>
-</br>
-   <label> Pet Size</label>
-<select name="size">
-       <option value="">--Please choose an option--</option>
-   <option value="Mini">Mini</option>
-  <option value="Small">Small</option>
-  <option value="Medium">Medium</option>
-  <option value="Large">Large</option>
-  <option value="Extra large">Extra large</option>
-</select>
+      <form
+        action="/createNewPet"
+        method="POST"
+        enctype="multipart/form-data"
+        class="px-md-2"
+      >
+
+        <section class="" >
+          <div class="container ">
+            <div
+              class="row d-flex justify-content-center align-items-center "
+            >
+              <div class="">
+                <div class="card rounded-3">
+                  <img
+                    src="images/happykittydog.png"
+                    class="w-100"
+                    style="border-top-left-radius: .3rem; border-top-right-radius: .3rem;"
+                    alt="Sample photo"
+                  />
+                  <div class="card-body p-4 p-md-5">
+                    <h3 class="mb-4 pb-2 pb-md-0 mb-md-5 px-md-2">Register the
+                      pet</h3>
+
+                    <div class="form-outline mb-4">
+
+                      <input
+                        type="text"
+                        id="form3Example1q"
+                        class="form-control"
+                        name="petName"
+                      />
+
+                      <label class="form-label">Pet Name</label>
+
+                    </div>
+
+                    <div class="row">
+                      <div class="col-md-6 mb-4">
+
+                        <div class="form-outline datepicker">
+
+                          <input
+                            type="number"
+                            name="weight"
+                            class="form-control"
+                            id="exampleDatepicker1"
+                          />
+                          <label class="form-label">Pet Weight in kilograms</label>
+                        </div>
+
+                      </div>
+
+                      <div class="col-md-6 mb-4">
+
+                        <select name="size" class="form-select">
+
+                          <option value="Mini">Mini</option>
+                          <option value="Small">Small</option>
+                          <option value="Medium">Medium</option>
+                          <option value="Large">Large</option>
+                          <option value="Extra large">Extra large</option>
+                        </select>
+
+                        <label> Pet Size</label>
+
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6 mb-4">
+
+                        <select name="sex" class="form-select">
+
+                          <option value="Male">Male</option>
+                          <option value="Female">Female</option>
+                        </select>
+                        <label> Pet Sex</label>
+
+                      </div>
+
+                      <div class="col-md-6 mb-4">
+
+                        <select name="petType" class="form-select">
+
+                          <option value="Cat">Cat</option>
+                          <option value="Dog">Dog</option>
+                        </select>
+                        <label> Pet Type</label>
+                      </div>
+
+                    </div>
+
+                    <div class="form-outline mb-4">
+
+                      <input
+                        type="text"
+                        name="address"
+                        id="addressPet"
+                        placeholder="Find your address in the Google Map"
+                        class="form-control"
+                        readonly
+                      />
+
+                      <label class="form-label">Pet address</label>
+                    </div>
+
+                    <div class="form-group">
+                      
+                      <input class="form-control"
+                        type="file"
+                        name="profile_pic"
+                        class="form-control-file"
+                        required
+                      />
+<label>Profile Pic</label>
 
 
-</br>
-      <label> Pet Weight</label>
-      <input type="number" name="weight" placeholder="Add the estimated/measured weight in kilograms">
+                    </div>
 
-</br>
+                    <button
+                      type="submit"
+                      class="btn btn-success btn-lg  my-4"
+                    >Submit</button>
 
-      <label> Pet Sex</label>
-<select name="sex">
-  <option value="Male">Male</option>
-  <option value="Female">Female</option>
-</select>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
 
-</br>
+        <input
+          type="hidden"
+          name="latitude"
+          placeholder="latitude"
+          id="latResult"
+        />
+        <input
+          type="hidden"
+          name="longitude"
+          placeholder="longitude"
+          id="longResult"
+        />
 
+      </form>
 
-      <label> Pet address</label>
-      <input type="text" name="address" id="addressPet" placeholder="Find your address in the Google Map" readonly>
+    </div>
+    <div class="col">
 
+      <h3 class="mb-4 pb-2 pb-md-0 mb-md-5 px-md-2">Find the place:</h3>
 
-   <button type="submit">Submit</button>
+      <div id="map1"></div>
 
+      <div >
 
-  <label>Address</label>
-  <input type="hidden" name="latitude" placeholder="latitude" id="latResult" >
-  <input type="hidden" name="longitude" placeholder="longitude" id="longResult">
+      <input 
+        type="text" class="w-auto p-3 h-auto h5"
+        name=""
+        placeholder="Find pet address in map"
+        id="address"
+      />
+      
 
+      <input class="w-auto p-3 h-auto h5" type="submit" name="" id="submit" />
 
+      </div>
 
+      <a class="btn btn-success btn-lg  my-4" href="/listPets">Back to the list</a>
+      <a class="btn btn-success btn-lg  my-4" href="/">Go Home</a>
+      
 
+      <input type="hidden" name="lat" id="lat" />
+      <input type="hidden" name="long" id="long" />
 
-</form>
-
-
-<h5>Find your place: </h5>
-
-
-<div id="map1"></div>
-<input type="text" name="" placeholder="Ubica tu dirección en el map" id="address"> 
-
-<input type="submit" name="" id="submit">
-
-
-<a href="/listPets">Back to the list</a>
-
-
-<input type="hidden" name="lat" id="lat">
-<input type="hidden" name="long" id="long">
-
+    </div>
+  </div>
+</div>
 
 <script src="{{key}}"></script>
 
 <script type="text/javascript" src="/js/profileMap.js"></script>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 {{#if errorMessage}}
-   {{errorMessage}}
+  {{errorMessage}}
 {{/if}}
