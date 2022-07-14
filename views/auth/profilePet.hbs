@@ -1,0 +1,109 @@
+
+{{!-- el perfil del perro/gato que sea modificable por los admin. --}}
+
+{{!-- se tiene que poder editar el perfil de perro; para editar requiero log in--}}
+
+{{!-- quiza no necesariamente un login pet  pero si un petProfile --}}
+
+
+{{!-- {{aqui se verían comentariso del pet. el mapa}} --}}
+
+
+<img src="{{hbpet.profile_pic}}" width="20%" height="auto" alt="Kitty" />
+
+</br>
+
+<h3>The pet: {{hbpet.petName}}</h3>
+
+ <h4>Which is a {{hbpet.sex}} {{hbpet.petType}}</h4>
+    
+   <h4> Its size: {{hbpet.size}}</h4>
+   <h4>Its weight: {{hbpet.weight}}</h4> 
+    
+
+
+<div>
+
+  <h5> Comments of other master pokepets !</h5>
+{{#each comments}}
+
+
+<ul>
+  <li>{{_author.username}} {{_author.lastname}}</li>
+<li>{{comment}}</li>
+</ul>  
+{{/each}}
+</div>
+
+
+
+                   {{#if hbpet._register}}
+                  <li> register name : {{hbpet._register.username}}</li>
+                  <li>Register email: {{hbpet._register.email}}</li>
+                {{/if}}
+
+
+
+</br>
+
+<a href="/adoptSuccess/{{hbpet._id}}"> Adopt </a>
+
+</br>
+
+
+<a href="/deletePet/{{hbpet._id}}"> Delete </a>
+
+</br>
+
+<a href="/editPet/{{hbpet._id}}"> Edit </a>
+
+</br>
+
+<a href="/profile/{{hbpet._id}}/comment"> Write a comment </a>
+
+
+
+
+
+
+
+
+
+ <div>
+ 
+  <h5>Write and submit a comment</h5>
+
+
+  <form action="/profile/{{hbpet._id}}/comment" method="POST"> 
+  
+  <textarea id="commentID" name="comment" rows="4" cols="50" placeholder="Write here your thoughts about this pet"> </textarea>
+  <br>
+  <input type="submit" value="Submit">
+</form>
+
+
+</div>
+ 
+
+
+
+
+
+
+<div id="map"></div>
+
+
+
+
+{{#if errorMessage}}
+   {{errorMessage}}
+{{/if}}
+
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="{{gkey}}"></script>
+
+<script type="text/javascript" src="/js/petLocation.js"></script>
+
+
+
+

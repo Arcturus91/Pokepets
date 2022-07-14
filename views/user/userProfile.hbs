@@ -1,0 +1,44 @@
+{{#if user}}
+<img src="{{user.profile_pic}}" alt="">
+<h2>Hello {{user.username}} {{user.lastname}}</h2>
+<p>Number: {{user.number}}</p>
+<P>Email: {{user.email}}</P>
+<div class="box-2">
+    <h2>Rescued pets</h2>
+{{#each user._pets}}
+
+<img src="{{profile_pic}}"  width="20%" height="auto" alt="userPic">
+
+<h1>{{petType}} {{petName}}</h1>
+<p>{{sex}}</p>
+
+{{/each}}
+</div>
+
+<div class="box-3">
+    <h2>Registered pets</h2>
+{{#each user._registered_pets}}
+
+<img src="{{profile_pic}}"  width="20%" height="auto" alt="userPic">
+
+<h1>{{petType}} {{petName}}</h1>
+<p>{{sex}}</p>
+
+{{/each}}
+</div>
+
+{{#ifEquals user.role 'ADMIN'}}
+    <button type="submit"><a href="/auth/listUsers">Check Users</a></button>    
+{{/ifEquals}}
+
+
+<button type="submit"><a href="/auth/editUser/{{user.id}}">Edit User</a></button>
+
+<br>
+<form id="logout-form" action="/auth/logout" method="POST">
+    <button>Logout</button>
+</form>
+
+{{else}}
+<p>The user is not logged in</p>
+{{/if}}

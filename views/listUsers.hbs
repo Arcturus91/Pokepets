@@ -1,0 +1,55 @@
+<div class="album py-5 bg-dark">
+
+    <h1 class="text-white">List of Users</h1>
+
+<br>
+<div class="home">
+               <button class="btn btn-secondary btn-lg ms-2"><a href="/" >Home</a></button>
+</div>
+<br>
+  <div class="container">
+
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 d-flex justify-content-center">
+    
+      {{#each users}}
+        <ul>
+          <div class="card" style="width: 18rem;">
+            <img src="{{profile_pic}}" class="card-img-top" alt="...">
+            <div class="card-body">
+            <h3 class="card-title"><li>{{username}} {{lastname}}</li></h3>
+            <p class="card-text"><li>{{email}}</li></p>
+            <p class="card-text"><li>{{number}}</li></p>
+            <li>{{#each _pets}}
+                <ul>
+                  <div class="card-pet" style="width: 14rem;">
+                    <div class="card-body">
+                    <h5 class="card-title"><li>{{petType}}: {{petName}}</li></h5>
+                    <img src="{{profile_pic}}" class="card-img-top" alt="..." height="125px">
+                    </div>
+                  </div>
+                </ul>
+                {{/each}}</li>
+                <br>
+            <a href="/auth/deleteUser/{{_id}}" class="btn btn-danger">Delete</a>
+            </div>
+          </div>
+        </ul>
+      {{/each}}
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+{{!-- 
+<div class="card" style="width: 18rem;">
+  <img src="..." class="card-img-top" alt="...">
+  <div class="card-body">
+    <h5 class="card-title">Card title</h5>
+    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+    <a href="#" class="btn btn-primary">Go somewhere</a>
+  </div>
+</div> --}}
