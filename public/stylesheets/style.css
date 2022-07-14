@@ -87,11 +87,6 @@ figure.container.hover figcaption {
   transition-delay: 0.2s;
 }
 
-
- 
-
-
-
 body {
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
@@ -114,36 +109,29 @@ h1 {
   width: auto;
   height: 500px;
 }
-
 #map0 {
   width: auto;
   height: 500px;
 }
-
 .access a{
   text-decoration: none;
   color: #ffff;
 }
-
 .sendMail{
   text-align: center;
 
 }
-
 .access a:hover{
   color:gainsboro;
 }
-
 input.sendEmail{
   border: 2px solid;
   border-radius: 8px;
   padding: 4px;
 }
-
 ul {
   list-style: none;
 }
-
 .home{
   margin: 15px;
 }
@@ -151,16 +139,64 @@ ul {
   text-decoration: none;
   color: #ffff;
 }
-
 .home a:hover{
   color:aliceblue;
 }
-
 .text-white{
   margin: 20px;
 }
-
 .card-pet{
   padding-right: 40px;
 }
+.boxOne{
+  display: flex;
+  justify-content: center;
+}
+.box-1{
+  margin-top: 50px;
+  text-align: center;
+}
+.botonsUser{
+  display: flex;
+  justify-content: space-between;
+}
+.botonsUser a{
+  text-decoration: none;
+  text-align: center;
+  color: black;
+}
+.button3{
+  display: flex;
+  text-align: center;
+  border-radius: 8px;
+  margin-left: 6%;
+  margin-top: 35px;
+}
+.button1 {
+ border-radius: 8px;
+}
+.cardsPetsProfile{
+  display: flex;
+  justify-content: space-between;
+}
+.box-2{
+  text-align: center;
+  margin-top: 40px;
+}
+.box-3{
+  text-align: center;
+  margin-top: 40px;
+}
 
+.allPageUserLogin{
+  height: 1111px;
+  background-image: url("https://img.freepik.com/premium-vector/different-type-cartoon-dogs_52569-1057.jpg?w=2000");
+  background-size: cover;
+  background-size: 25rem;
+  -moz-background-size: cover;
+        -webkit-background-size: cover;
+        -o-background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-attachment: fixed;
+}
