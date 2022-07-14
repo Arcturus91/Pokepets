@@ -1,28 +1,44 @@
 <div id="form">
     <h2>Edit {{username}} {{lastname}}</h2>
-    <form action="/auth/editUser/{{_id}}" method="POST" enctype="multipart/form-data">
-        <label for="">Number phone:
-             <input type="number" name="number" value="{{number}}">
-        </label>
 
-        <label for="">Email:
-             <input type="email" name="email" value="{{email}}">
-        </label>
+<form action="/auth/editUser/{{_id}}" method="POST" enctype="multipart/form-data">
+  <!-- 2 column grid layout with text inputs for the first and last names -->
+  <div class="row mb-4">
+    <div class="col">
+      <div class="form-outline">
+        <input type="number" id="form3Example1" class="form-control" name="number" value="{{number}}"/>
+        <label class="form-label" for="form3Example1">Number phone:</label>
+      </div>
+    </div>
+    <div class="col">
+      <div class="form-outline">
+        <input type="password" id="form3Example2" class="form-control" name="password"/>
+        <label class="form-label" for="form3Example2">Password:</label>
+      </div>
+    </div>
+  </div>
 
-        <label for="">Image:
-             <input type="file" name="profile_pic">
-        </label>
+  <!-- Email input -->
+  <div class="form-outline mb-4">
+    <input type="email" id="form3Example3" class="form-control" name="email" value="{{email}}"/>
+    <label class="form-label" for="form3Example3">Email address:</label>
+  </div>
 
-        <label for="">Password:
-             <input type="password" name="password">
-        </label>
+  <!-- Password input -->
+  <div class="form-outline mb-4">
+    <input type="file" id="form3Example4" class="form-control" name="profile_pic"/>
+    <label class="form-label" for="form3Example4">Image:</label>
+  </div>
 
-        <button type="submit">Update</button>
-    </form>
+  <!-- Submit button -->
+  <button type="submit" class="btn btn-primary btn-block mb-4">Update</button>
+
+
+     {{#if errorMessage}}
+     {{errorMessage}}
+     <br>
+     <img src="https://c.tenor.com/KLAHPW3-BaQAAAAC/loading-error.gif" alt="">
+     {{/if}}
+
+</form>
 </div>
-
-{{#if errorMessage}}
-{{errorMessage}}
-<br>
-<img src="https://c.tenor.com/KLAHPW3-BaQAAAAC/loading-error.gif" alt="">
-{{/if}}

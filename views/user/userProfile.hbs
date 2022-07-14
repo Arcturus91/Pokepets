@@ -1,8 +1,29 @@
+<div class="box-1">
 {{#if user}}
 <img src="{{user.profile_pic}}" alt="">
 <h2>Hello {{user.username}} {{user.lastname}}</h2>
 <p>Number: {{user.number}}</p>
 <P>Email: {{user.email}}</P>
+
+
+{{#ifEquals user.role 'ADMIN'}}
+    <button type="submit"><a href="/auth/listUsers">Check Users</a></button>    
+{{/ifEquals}}
+
+
+<button type="submit"><a href="/auth/editUser/{{user.id}}">Edit User</a></button>
+
+<br>
+<form id="logout-form" action="/auth/logout" method="POST">
+    <button>Logout</button>
+</form>
+
+{{else}}
+<p>The user is not logged in</p>
+{{/if}}
+
+</div>
+
 <div class="box-2">
     <h2>Rescued pets</h2>
 {{#each user._pets}}
@@ -26,19 +47,3 @@
 
 {{/each}}
 </div>
-
-{{#ifEquals user.role 'ADMIN'}}
-    <button type="submit"><a href="/auth/listUsers">Check Users</a></button>    
-{{/ifEquals}}
-
-
-<button type="submit"><a href="/auth/editUser/{{user.id}}">Edit User</a></button>
-
-<br>
-<form id="logout-form" action="/auth/logout" method="POST">
-    <button>Logout</button>
-</form>
-
-{{else}}
-<p>The user is not logged in</p>
-{{/if}}
