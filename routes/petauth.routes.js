@@ -117,11 +117,11 @@ router.post("/createNewPet", fileUploader.single('profile_pic'), isLoggedOut, (r
         User.findByIdAndUpdate(req.session.currentUser._id, { $push: { _registered_pets: newpet._id } })
         .then((user) => {
 
-//console.log("pusheo de pet al user", user)
+console.log("pusheo de pet al user", user)
 
 Pet.findByIdAndUpdate(newpet._id,{ _register: user._id })
 .then(pet=>{
-  //console.log("the updated user and pet ", user, pet);
+  console.log("the updated user and pet ", user, pet);
 res.redirect("/");
     })
   })}
