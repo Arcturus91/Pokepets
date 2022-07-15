@@ -46,13 +46,13 @@ router.post("/createNewPet", fileUploader.single('profile_pic'), isLoggedOut, (r
 
   if (!petName) {
     return res.status(400).render("createNewPet", {
-      errorMessage: "Please provide your pet name.",
+      errorMessage: "Click above in 'Add a new pet' and provide pet name.",
     });
   }
 
   if (!petType) {
     return res.status(400).render("createNewPet", {
-      errorMessage: "Please define wether your pet is a god or a cat",
+      errorMessage: "Please define wether your pet is a dog or a cat.",
     });
   }
 
@@ -71,7 +71,7 @@ router.post("/createNewPet", fileUploader.single('profile_pic'), isLoggedOut, (r
 
   if (!weight) {
     return res.status(400).render("createNewPet", {
-      errorMessage: "Please indicate your pet weight",
+      errorMessage: "Click above in 'Add a new pet' and indicate your pet weight.",
     });
   }
 
@@ -81,9 +81,9 @@ router.post("/createNewPet", fileUploader.single('profile_pic'), isLoggedOut, (r
     });
   }
 
-  if (!address) {
+  if (!address ||address.length === 0) {
     return res.status(400).render("createNewPet", {
-      errorMessage: "Please indicate where to find the pet",
+      errorMessage: "Click above in 'Add a new pet' and provide pet address",
     });
   }
 
