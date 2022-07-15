@@ -90,10 +90,65 @@ figure.container.hover figcaption {
 body {
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  
 }
 
+.elBody {
+  background-color: #659dbd;
+} 
+
+
+
+.navbar{
+  
+ padding: 0px 50px 0px 50px; 
+ 
+  
+}
+
+.navbar > a {
+  color:  white;
+  text-decoration: none;
+  
+  font-size:25px;
+display:flex;
+justify-content: space-evenly;
 
 }
+
+.alist > li > a{
+  color:  black;
+  text-decoration: none;
+  padding:20px
+}
+
+.alist > li {
+padding: 5px 0px ;
+margin:10px;
+display: flex;
+flex-direction: row;
+
+}
+
+.imgcover{
+  object-fit: contain;
+  height: 700px;
+  
+  }
+  
+  .createNewPet{
+    border-radius: 30px;
+  }
+  
+  #createNewPet label{
+  
+    font-size: 22px;
+  }
+
+
+
+
+
 
 h1 {
   color: 15px;
@@ -204,6 +259,7 @@ ul {
 .pagUserProfile{
   height: 1500px;
   background-image: url("https://img.freepik.com/vector-gratis/fondo-cielo-pastel-acuarela-pintado-mano_23-2148907305.jpg?w=2000");
+}
 
 .allPageUserLogin{
   height: 1111px;
