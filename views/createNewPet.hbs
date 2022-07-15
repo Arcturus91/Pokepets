@@ -1,11 +1,28 @@
+<div class="container py-5 my-5 createNewPet" style="background-color: #f4eed6">
 
-<div class="container py-5 my-5 createNewPet"   style="background-color: #f4eed6">
+        {{#if errorMessage}}
 
-  <h4 class="display-4 d-flex justify-content-center my-5">Welcome! Please Fill The Pet Data and Press Submit</h4>
-  
+        <div class="alert">
+          
+          <a href="/createNewPet">
+          <span
+            class="closebtn"
+            onclick="this.parentElement.style.display='none';"
+          >&times;</span>
+          </a>
+          <strong>Error:</strong>
+          {{errorMessage}}
+        </div>
+
+      {{/if}}
+
+  <h4 class="display-4 d-flex justify-content-center my-5">Welcome! Please Fill
+    The Pet Data and Press Submit</h4>
 
   <div class="row">
     <div class="col">
+
+
 
       <form
         action="/createNewPet"
@@ -15,11 +32,9 @@
         id="createNewPet"
       >
 
-        <section class="" >
-          <div class="container ">
-            <div
-              class="row d-flex justify-content-center align-items-center "
-            >
+        <section class="">
+          <div class="container">
+            <div class="row d-flex justify-content-center align-items-center">
               <div class="">
                 <div class="card rounded-3">
                   <img
@@ -63,7 +78,6 @@
 
                       <div class="col-md-6 mb-4">
 
-
                         <select name="size" class="form-select" id="size">
 
                           <option value="Mini">Mini</option>
@@ -73,7 +87,7 @@
                           <option value="Extra large">Extra large</option>
                         </select>
 
-                        <label > Pet Size</label>
+                        <label> Pet Size</label>
 
                       </div>
                     </div>
@@ -105,10 +119,10 @@
 
                       <input
                         type="text"
+                        class="form-control"
                         name="address"
                         id="addressPet"
-                        placeholder="Find your address in the Google Map"
-                        class="form-control"
+                        placeholder="Find the address in the Google Maps &#10145;&#65039;"
                         readonly
                       />
 
@@ -116,22 +130,25 @@
                     </div>
 
                     <div class="form-group">
-                      
-                      <input class="form-control"
+
+                      <input
+                        class="form-control"
                         type="file"
                         name="profile_pic"
-                        class="form-control-file"
                         required
                       />
-<label>Profile Pic</label>
-
+                      <label>Profile Pic</label>
 
                     </div>
 
-                    <button
-                      type="submit"
-                      class="btn btn-success btn-lg  my-4"
-                    >Submit</button>
+                    <div class="col">
+
+                      <button
+                        type="submit"
+                        class="btn btn-success btn-lg my-4"
+                      >Submit</button>
+
+                    </div>
 
                   </div>
                 </div>
@@ -157,30 +174,28 @@
 
     </div>
 
-
     <div class="col align-self-center">
 
       <h3 class="mb-4 pb-2 pb-md-0 mb-md-5 px-md-2">Find the place:</h3>
 
       <div id="map1"></div>
 
-      <div >
+      <div>
 
-      <input 
-        type="text" class="w-auto p-3 h-auto h5"
-        name=""
-        placeholder="Find pet address in map"
-        id="address"
-      />
-      
+        <input
+          type="text"
+          class="w-auto p-3 h-auto h5"
+          name=""
+          placeholder="Find pet address in map"
+          id="address"
+        />
 
-      <input class="w-auto p-3 h-auto h5" type="submit" name="" id="submit" />
+        <input class="w-auto p-3 h-auto h5" type="submit" name="" id="submit" />
 
       </div>
 
-      <a class="btn btn-success btn-lg  my-4" href="/listPets">Back to the list</a>
-      <a class="btn btn-success btn-lg  my-4" href="/">Go Home</a>
-      
+      <a class="btn btn-success btn-lg my-4" href="/listPets">Back to the list</a>
+      <a class="btn btn-success btn-lg my-4" href="/">Go Home</a>
 
       <input type="hidden" name="lat" id="lat" />
       <input type="hidden" name="long" id="long" />
@@ -192,7 +207,3 @@
 <script src="{{key}}"></script>
 
 <script type="text/javascript" src="/js/profileMap.js"></script>
-
-{{#if errorMessage}}
-  {{errorMessage}}
-{{/if}}
