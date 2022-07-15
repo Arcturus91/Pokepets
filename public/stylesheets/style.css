@@ -167,10 +167,9 @@ ul {
 }
 .button3{
   display: flex;
-  text-align: center;
+  margin-right: 200px;
   border-radius: 8px;
-  margin-left: 6%;
-  margin-top: 35px;
+  margin-top: 10px;
 }
 .button1 {
  border-radius: 8px;
@@ -191,6 +190,19 @@ ul {
 .allPageUserLogin{
   height: 1111px;
   background-image: url("https://img.freepik.com/premium-vector/different-type-cartoon-dogs_52569-1057.jpg?w=2000");
+  background-size: cover;
+  background-size: 25rem;
+  -moz-background-size: cover;
+        -webkit-background-size: cover;
+        -o-background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-attachment: fixed;
+}
+
+.pagUserProfile{
+  height: 1500px;
+  background-image: url("https://img.freepik.com/vector-gratis/fondo-cielo-pastel-acuarela-pintado-mano_23-2148907305.jpg?w=2000");
   background-size: cover;
   background-size: 25rem;
   -moz-background-size: cover;
