@@ -1,29 +1,41 @@
 {{!-- si hay adopción, sale una sección de adopcion arriba de lo de historias de exito
 
 sino, solo historias de exito --}}
-
-
-<p>That's awesome {{userData.username}}! You have adopted {{petData.petName}} &#128525;</p>
-
+<div class="Celebrations">
+<br>
+<br>
+<br>
+<div style="background-color: #EBEBEB;">
+<p class="fs-2 text-center" style="color: crimson;"><i><b>That's awesome {{userData.username}}! You have adopted {{petData.petName}}!</b></i></p>
+</div>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
 <div class="container">
   <div class="row">
-    <div class="col">
-      <img src="{{userData.profile_pic}}" alt="user">
+    <div class="col" style="margin-left: 150px;">
+      <img src="{{userData.profile_pic}}" alt="user" width="200px" height="">
     </div>
-    <div class="col">
-      &#10084;&#65039;
-    </div>
-    <div class="col">
-    <img src="{{petData.profile_pic}}" alt="user">
+
+    <div class="col" style="margin-left: 50px;">
+    <img src="{{petData.profile_pic}}" alt="user" width="200px" height="200px">
     </div>
   </div>
 </div>
-
-
-
+<br>
+<br>
+<br>
+<br>
 <br>
 
-<button type="submit"><a href="/listPets">Go check more pets to adopt &#128521;</a></button>
+<div class="d-flex justify-content-center">
+<a href="/listPets" class="btn btn-secondary" style="width: 20rem;">Go check more pets to adopt</a></button>
+</div>
 
-<a href="/">Home</a>
-  
+<a href="/" class="btn btn-success" style="margin-left:480px; margin-top:100px">Home</a>
+<br>
+<br>
+</div>
