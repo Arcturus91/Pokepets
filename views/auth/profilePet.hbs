@@ -20,11 +20,14 @@
       <h3>Here we have our beloved {{hbpet.petType}}, {{hbpet.petName}}</h3>
 
 
-      {{#if hbpet._register}}s
+      {{#if hbpet._register}}
         <p class="h5 px-5 py-2"> It was brought to Pokepets by <span style="text-decoration: underline;">{{hbpet._register.username}} </span>  ({{hbpet._register.email}})</p>
       {{/if}}
 
       <p class="h5 px-5 py-2">A <span style="color:red">{{hbpet.sex}} </span> pet which size is <span style="color:red">{{hbpet.size}} </span> with <span style="color:red">{{hbpet.weight}} kilograms</span> of weight. </p>
+      <p class="h5 px-5 py-2">It's full address &#128205 is <span style="color:red">{{hbpet.address}} </span>. </p>
+      <p class="h5 px-5 py-2">Check the <span style="color:red">map</span> below if you don't know the place. &#11015;&#65039;</p>
+
 
 
 
@@ -46,33 +49,14 @@
 
 
 
-    <div class="col align-self-center">
-
-      
+    <div class="col ">
 
       <div>
 
-        <h5 class="mb-4 pb-2 pb-md-0 mb-md-5 px-md-2"> Comments of other master pokepets !</h5>
-        {{#each comments}}
+      <h3 class="my-3">Write and submit a comment</h3>
+        
 
-          <ul>
-            <li>{{_author.username}} {{_author.lastname}}</li>
-            <li>{{comment}}</li>
-          </ul>
-        {{/each}}
-      </div>
-
-
-
-
-
-      <a href="/profile/{{hbpet._id}}/comment"> Write a comment </a>
-
-      <div>
-
-        <h5>Write and submit a comment</h5>
-
-        <form action="/profile/{{hbpet._id}}/comment" method="POST">
+        <form class="px-md-2" action="/profile/{{hbpet._id}}/comment" method="POST">
 
           <textarea
             id="commentID"
@@ -82,10 +66,31 @@
             placeholder="Write here your thoughts about this pet"
           > </textarea>
           <br />
-          <input type="submit" value="Submit" />
+          <input class="btn btn-success btn-lg mx-3" style="width:150px" type="submit" value="Comment &#128213;" />
         </form>
 
       </div>
+
+      <div>
+
+<h3 class="my-5"> Comments of other master pokepets !</h3>
+        {{#each comments}}
+
+          <ul>
+            <li>{{_author.username}} {{_author.lastname}} says:</li>
+                  <li class="h5 px-5 py-2 border-bottom">{{comment}}</li>
+
+          </ul>
+        {{/each}}
+      </div>
+
+
+
+
+
+    {{!--   <a href="/profile/{{hbpet._id}}/comment"> Write a comment </a> --}}
+
+      
 
     </div>
 
