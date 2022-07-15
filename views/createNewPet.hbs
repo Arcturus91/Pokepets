@@ -1,5 +1,7 @@
-<div class="container py-5" style="background-color: #d39d77 ">
-  {{!-- #DACBB8 --}}
+<div class="container py-5 my-5 createNewPet"   style="background-color: #f4eed6">
+
+  <h4 class="display-4 d-flex justify-content-center my-5">Welcome! Please Fill The Pet Data and Press Submit</h4>
+  
 
   <div class="row">
     <div class="col">
@@ -9,6 +11,7 @@
         method="POST"
         enctype="multipart/form-data"
         class="px-md-2"
+        id="createNewPet"
       >
 
         <section class="" >
@@ -25,7 +28,7 @@
                     alt="Sample photo"
                   />
                   <div class="card-body p-4 p-md-5">
-                    <h3 class="mb-4 pb-2 pb-md-0 mb-md-5 px-md-2">Register the
+                    <h3 class="mb-4 pb-2 pb-md-0 mb-md-4 px-md-2">Register the
                       pet</h3>
 
                     <div class="form-outline mb-4">
@@ -37,7 +40,7 @@
                         name="petName"
                       />
 
-                      <label class="form-label">Pet Name</label>
+                      <label class="form-label h5">Pet Name</label>
 
                     </div>
 
@@ -59,7 +62,8 @@
 
                       <div class="col-md-6 mb-4">
 
-                        <select name="size" class="form-select">
+
+                        <select name="size" class="form-select" id="size">
 
                           <option value="Mini">Mini</option>
                           <option value="Small">Small</option>
@@ -68,7 +72,7 @@
                           <option value="Extra large">Extra large</option>
                         </select>
 
-                        <label> Pet Size</label>
+                        <label > Pet Size</label>
 
                       </div>
                     </div>
@@ -151,7 +155,9 @@
       </form>
 
     </div>
-    <div class="col">
+
+
+    <div class="col align-self-center">
 
       <h3 class="mb-4 pb-2 pb-md-0 mb-md-5 px-md-2">Find the place:</h3>
 

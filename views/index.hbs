@@ -3,13 +3,14 @@
 
 
 
-<div class="container d-flex  flex-column align-items-center my-5 py-5" style="background-color: #d39d77;">
+<div class="container d-flex  flex-column align-items-center my-4 py-3 rounded tales carousel-inner">
 
-    <h1>{{appTitle}}&#128021; Welcome to Pockepets &#128008; </h1>
+    <h1 class="display-1">{{appTitle}}&#128021; Welcome to Pockepets &#128008; </h1>
 
 
 
-<div id="carouselExampleIndicators" class="carousel slide  " data-bs-ride="carousel">
+<div id="carouselExampleIndicators" class="carousel slide py-5" data-bs-ride="carousel">
+
   <div class="carousel-indicators">
     <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
     <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
@@ -39,7 +40,7 @@
 
     </div>
   </div>
-  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev" >
     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
     <span class="visually-hidden">Previous</span>
   </button>
@@ -54,28 +55,32 @@
 
 </div>
  
+
+ <section id="instructions">
 <div class="my-5">
  
-        <h3>Instructions</h3>
+        <h3 class="text-black">Instructions</h3>
        
-     <ul class="h4 ">
+     <ul class=" alist">
 
-        <li>
-<a href="/auth/signup">1. Create your profile</a></li>
+        <li class="btn btn-primary btn-lg bg-light">
+<a href="/auth/signup">Create your profile</a></li>
 
-<li>
-<a href="/auth/login">2. Login yourself</a></li>
+<li class="btn btn-primary btn-lg bg-light">
+<a href="/auth/login">Login yourself</a></li>
 
-<li>
-<a href="/createNewPet">3. Add a new pet</a></li>
+<li class="btn btn-primary btn-lg bg-light">
+<a href="/createNewPet">Add a new pet</a></li>
 
-<li>
-<a href="/listPets">4. Go check the list of available pets</a>
+<li class="btn btn-primary btn-lg bg-light">
+<a href="/listPets">Go check the list of available pets</a>
 </li>
 </ul>
 
 
 </div>
+
+</section>
 
 
 

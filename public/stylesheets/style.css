@@ -99,11 +99,39 @@ body {
 }
 
 .elBody {
-  background-color: #F9F6F0;
+  background-color: #659dbd;
 } 
 
-a {
-  color: #00b7ff;
+
+.navbar{
+  
+ padding: 0px 50px 0px 50px; 
+ 
+  
+}
+
+.navbar > a {
+  color:  white;
+  text-decoration: none;
+  
+  font-size:25px;
+display:flex;
+justify-content: space-evenly;
+
+}
+
+.alist > li > a{
+  color:  black;
+  text-decoration: none;
+  padding:20px
+}
+
+.alist > li {
+padding: 5px 0px ;
+margin:10px;
+display: flex;
+flex-direction: row;
+
 }
 
 h1 {
@@ -171,6 +199,74 @@ ul {
 
 .imgcover{
 object-fit: contain;
+height: 700px;
 
 }
+
+.createNewPet{
+  border-radius: 30px;
+}
+
+#createNewPet label{
+
+  font-size: 22px;
+}
+
+
+.boxOne{
+  display: flex;
+  justify-content: center;
+}
+.box-1{
+  margin-top: 50px;
+  text-align: center;
+}
+.botonsUser{
+  display: flex;
+  justify-content: space-between;
+}
+.botonsUser a{
+  text-decoration: none;
+  text-align: center;
+  color: black;
+}
+.button3{
+  display: flex;
+  text-align: center;
+  border-radius: 8px;
+  margin-left: 6%;
+  margin-top: 35px;
+}
+.button1 {
+ border-radius: 8px;
+}
+.cardsPetsProfile{
+  display: flex;
+  justify-content: space-between;
+}
+.box-2{
+  text-align: center;
+  margin-top: 40px;
+}
+.box-3{
+  text-align: center;
+  margin-top: 40px;
+}
+
+.allPageUserLogin{
+  height: 1111px;
+  background-image: url("https://img.freepik.com/premium-vector/different-type-cartoon-dogs_52569-1057.jpg?w=2000");
+  background-size: cover;
+  background-size: 25rem;
+  -moz-background-size: cover;
+        -webkit-background-size: cover;
+        -o-background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-attachment: fixed;
+}
+
+
+
+
 
