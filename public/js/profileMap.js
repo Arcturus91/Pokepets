@@ -96,5 +96,3 @@ addressPet.value = desiredObject.results[0].formatted_address
 
 
 initMap()
-
-//formatted_address:
