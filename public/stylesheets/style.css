@@ -92,9 +92,6 @@ body {
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
-
-}
-
 h1 {
   color: 15px;
 }
@@ -202,14 +199,35 @@ ul {
 }
 
 .pagUserProfile{
-  height: 1500px;
+  height: 1211px;
   background-image: url("https://img.freepik.com/vector-gratis/fondo-cielo-pastel-acuarela-pintado-mano_23-2148907305.jpg?w=2000");
+  background-size: cover;
+  background-size: 25rem;
+  -moz-background-size: cover;
+        -webkit-background-size: cover;
+        -o-background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-attachment: fixed;
+}
 
 .allPageUserLogin{
   height: 1111px;
   background-image: url("https://img.freepik.com/premium-vector/different-type-cartoon-dogs_52569-1057.jpg?w=2000");
   background-size: cover;
   background-size: 25rem;
+  -moz-background-size: cover;
+        -webkit-background-size: cover;
+        -o-background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-attachment: fixed;
+}
+
+.Celebrations{
+  height: 1000px;
+  background-image: url("https://img.freepik.com/free-photo/confetti-yellow_24972-755.jpg?w=2000");
+  background-size: cover;
   -moz-background-size: cover;
         -webkit-background-size: cover;
         -o-background-size: cover;
