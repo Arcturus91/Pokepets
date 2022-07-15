@@ -182,8 +182,9 @@ router.get("/profile/:id", (req, res, next) => {
 Comment.find({_pet:id})
 .populate('_author')
 .then(comments=>{
-console.log(comments)
-  res.render("auth/profilePet", { hbpet:pet, comments, gkey: key });
+console.log("el req session del profile",req.session.currentUser.role)
+let role = req.session.currentUser.role
+  res.render("auth/profilePet", { hbpet:pet, comments, gkey: key, role });
 })
 
 

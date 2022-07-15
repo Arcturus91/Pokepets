@@ -133,15 +133,28 @@ flex-direction: row;
 
 }
 
+
+
+
+.alistProfile > li {
+
+
+text-decoration: none;
+}
+
+
 .imgcover{
   object-fit: contain;
   height: 700px;
   
   }
 
-  .imgcoverlist{
+  .imgcoverprofile{
     object-fit: contain;
-    height: 700px;
+    min-width: 400px;
+    max-width: 410px;
+    min-height: 400px;
+    max-height: 410px;
     
     }
   

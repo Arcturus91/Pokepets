@@ -1,109 +1,99 @@
-
-{{!-- el perfil del perro/gato que sea modificable por los admin. --}}
-
-{{!-- se tiene que poder editar el perfil de perro; para editar requiero log in--}}
-
-{{!-- quiza no necesariamente un login pet  pero si un petProfile --}}
-
+{{! quiza no necesariamente un login pet  pero si un petProfile }}
 
 {{!-- {{aqui se verían comentariso del pet. el mapa}} --}}
 
+<div class="container py-5 my-5 createNewPet" style="background-color: #f4eed6">
 
-<img src="{{hbpet.profile_pic}}" width="20%" height="auto" alt="Kitty" />
+  <h4 class="display-4 d-flex justify-content-center my-5">Adopt or be in touch
+    by leaving a comment &#128521;</h4>
 
-</br>
-
-<h3>The pet: {{hbpet.petName}}</h3>
-
- <h4>Which is a {{hbpet.sex}} {{hbpet.petType}}</h4>
-    
-   <h4> Its size: {{hbpet.size}}</h4>
-   <h4>Its weight: {{hbpet.weight}}</h4> 
-    
+  <div class="row d-flex justify-content-around">
 
 
-<div>
+{{!-- div del pet --}}
+    <div class="col px-5 mx-3 d-flex flex-column align-items-center " >
 
-  <h5> Comments of other master pokepets !</h5>
-{{#each comments}}
+      <img src="{{hbpet.profile_pic}}" class="imgcoverprofile" alt="Kitty" />
 
-
-<ul>
-  <li>{{_author.username}} {{_author.lastname}}</li>
-<li>{{comment}}</li>
-</ul>  
-{{/each}}
-</div>
+      
+<div class="container  d-flex flex-column align-items-center">
+      <h3>Here we have our beloved {{hbpet.petType}}, {{hbpet.petName}}</h3>
 
 
+      {{#if hbpet._register}}s
+        <p class="h5 px-5 py-2"> It was brought to Pokepets by <span style="text-decoration: underline;">{{hbpet._register.username}} </span>  ({{hbpet._register.email}})</p>
+      {{/if}}
 
-                   {{#if hbpet._register}}
-                  <li> register name : {{hbpet._register.username}}</li>
-                  <li>Register email: {{hbpet._register.email}}</li>
-                {{/if}}
+      <p class="h5 px-5 py-2">A <span style="color:red">{{hbpet.sex}} </span> pet which size is <span style="color:red">{{hbpet.size}} </span> with <span style="color:red">{{hbpet.weight}} kilograms</span> of weight. </p>
 
-
-
-</br>
-
-<a href="/adoptSuccess/{{hbpet._id}}"> Adopt </a>
-
-</br>
-
-
-<a href="/deletePet/{{hbpet._id}}"> Delete </a>
-
-</br>
-
-<a href="/editPet/{{hbpet._id}}"> Edit </a>
-
-</br>
-
-<a href="/profile/{{hbpet._id}}/comment"> Write a comment </a>
-
-
-
-
-
-
-
-
-
- <div>
- 
-  <h5>Write and submit a comment</h5>
-
-
-  <form action="/profile/{{hbpet._id}}/comment" method="POST"> 
-  
-  <textarea id="commentID" name="comment" rows="4" cols="50" placeholder="Write here your thoughts about this pet"> </textarea>
-  <br>
-  <input type="submit" value="Submit">
-</form>
 
 
 </div>
+      
+  <div class="container my-3 d-flex justify-content-center">
+
+      <a class="btn btn-success btn-lg mx-3" style="width:150px"  href="/adoptSuccess/{{hbpet._id}}"> Adopt </a>
+
+{{#ifEquals role  'ADMIN'}}
+      <a class="btn btn-success btn-lg mx-3" style="width:150px"  href="/deletePet/{{hbpet._id}}"> Delete </a>
+
+      <a class="btn btn-success btn-lg mx-3" style="width:150px"  href="/editPet/{{hbpet._id}}"> Edit </a>
+{{/ifEquals}}
  
+</div>
+
+    </div>
+
+
+
+    <div class="col align-self-center">
+
+      
+
+      <div>
+
+        <h5 class="mb-4 pb-2 pb-md-0 mb-md-5 px-md-2"> Comments of other master pokepets !</h5>
+        {{#each comments}}
+
+          <ul>
+            <li>{{_author.username}} {{_author.lastname}}</li>
+            <li>{{comment}}</li>
+          </ul>
+        {{/each}}
+      </div>
 
 
 
 
 
+      <a href="/profile/{{hbpet._id}}/comment"> Write a comment </a>
 
-<div id="map"></div>
+      <div>
 
+        <h5>Write and submit a comment</h5>
 
+        <form action="/profile/{{hbpet._id}}/comment" method="POST">
 
+          <textarea
+            id="commentID"
+            name="comment"
+            rows="4"
+            cols="50"
+            placeholder="Write here your thoughts about this pet"
+          > </textarea>
+          <br />
+          <input type="submit" value="Submit" />
+        </form>
 
-{{#if errorMessage}}
-   {{errorMessage}}
-{{/if}}
+      </div>
+
+    </div>
+
+  </div>
+  <div class="container my-5 py-5" id="map"></div>
+</div>
 
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script src="{{gkey}}"></script>
 
 <script type="text/javascript" src="/js/petLocation.js"></script>
-
-
-
-
