@@ -4,10 +4,22 @@
 //extraigo lat,long
 
 
+/* ciudad de mexic: 
+lat: 19.4346835,
+    lng: -99.1391493
+ */
+
+
+
+/* lima
+lat: -12.0547601,
+    lng: -77.0909803
+     */
+
 window.addEventListener('load', () => {
   const initLocation = {
-    lat: -12.0547601,
-    lng: -77.0909803
+    lat: 19.4346835,
+    lng: -99.1391493
   };
 
  

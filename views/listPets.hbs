@@ -10,10 +10,11 @@
 
       {{#each hbpets}}
 
-        {{#if _adopter}}    
+        {{#if _adopter}}
         
-        
-                 <figure class="container">
+        {{else}}
+
+                  <figure class="container">
 
             <img src="{{profile_pic}}" alt="" />
             <figcaption>
@@ -36,10 +37,6 @@
 
             </figcaption>
           </figure>
-        
-        {{else}}
-
- 
 
         {{/if}}
 

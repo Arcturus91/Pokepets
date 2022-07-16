@@ -1,17 +1,18 @@
 window.addEventListener('load', () => {
 
+  
 
 
   const initLocation = {
-    lat: -12.0547601,
-    lng: -77.0909803
+    lat: 19.4346835,
+    lng: -99.1391493
   };
 
  
  //initicializamos la variable map 
 
   const map = new google.maps.Map(document.getElementById('map0'), {
-    zoom: 13,
+    zoom: 12,
     center: initLocation
   });
 
