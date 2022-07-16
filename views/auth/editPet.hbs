@@ -1,72 +1,115 @@
-<div id="form">
+<div class="container py-5 my-5 createNewPet" style="background-color: #f4eed6" id="form">
 
     
-    <h2>Edit {{hbpet.petName}} </h2>
+   
 
-    <form action="/editPet/{{hbpet._id}}" method="POST" enctype="multipart/form-data">
+ <h4 class="display-4 d-flex justify-content-center my-5 text-uppercase">Add the new {{hbpet.petName}} info </h4>
 
-      <label> Pet Sex</label>
-<select name="sex">
-  <option value="Male">Male</option>
-  <option value="Female">Female</option>
-</select>
+    <div class="container">
 
-           <label> Pet Size</label>
-<select name="size">
-        <option value="">--Please choose an option--</option>
+    <form class="px-2"action="/editPet/{{hbpet._id}}" method="POST" enctype="multipart/form-data">
+
+<div class="d-flex justify-content-between mx-5">
+
+  <div class="col ">
+<img
+                    src="{{hbpet.profile_pic}}"
+                    class="imgcoverprofile"
+                    alt="Pet profile pic"
+                  />
+</div>
+
+<div class="col d-flex flex-column" id="editNewPet">
+
+
+<div class="form-outline datepicker mb-3">
+      <input class="form-control" type="number" name="weight" value = "{{hbpet.weight}}">
+<label > Pet Weight in kilograms</label>
+</div>
+
+<div class="mb-3">
+           
+<select name="size" class="form-select">
    <option value="Mini">Mini</option>
   <option value="Small">Small</option>
   <option value="Medium">Medium</option>
   <option value="Large">Large</option>
   <option value="Extra large">Extra large</option>
 </select>
+<label> Pet Size</label>
 
-
-</br>
-      <label> Pet Weight</label>
-      <input type="number" name="weight" value = "{{hbpet.weight}}">
-
-</br>
-
-        <label for="">Image:
-             <input type="file" name="profile_pic">
-        </label>
+</div>
 
 
 
 
-      <label> Pet address</label>
-      <input type="text" name="address" id="addressPet" value="{{hbpet.address}}" readonly>
+     <div class="mb-3"> 
+<select name="sex" class="form-select">
+  <option value="Male">Male</option>
+  <option value="Female">Female</option>
+</select>
+
+<label> Pet Sex</label>
+</div>
 
 
-   <button type="submit">Submit</button>
 
 
-  <label>Address</label>
+
+<div class="mb-3">
+        <input
+                        class="form-control"
+                        type="file"
+                        name="profile_pic"
+                      />
+        <label>Profile Pic</label>
+</div>
+
+
+
+      <div class="form-outline mb-3">
+
+      <input class="form-control" type="text" name="address" id="addressPet" value="{{hbpet.address}}" readonly>
+<label class="form-label"> Pet address</label>
+</div>
+
+
+
+
+
+   <button type="submit" class="btn btn-success btn-lg my-4">Submit</button>
+</div>
+
+  
   <input  type="hidden"  name="latitude" placeholder="latitude" id="latResult" value="{{hbpet.location.coordinates.[0]}}" >
   <input  type="hidden"  name="longitude" placeholder="longitude" id="longResult" value="{{hbpet.location.coordinates.[1]}}">
 
 </form>
+
 </div>
 
-<h5>Want to specify a new address? Search it here:
-</h5>
 
-<p>The new pet address</p> 
+      <h3 class="pb-2 pb-md-0 px-md-2 my-3">Want to specify a new address? Search it here:</h3>
+
 
 
 <div id="map1"></div>
 
-<input type="text" name="" placeholder="The address in the map" id="address"> 
+    <div>
+    <input class="w-auto p-3 h-auto h5" type="text" name="" placeholder="Find the new pet address in map" id="address"> 
 
-<input type="submit" name="" id="submit">
+    <input class="w-auto p-3 h-auto h5" type="submit" name="" id="submit">
+    </div>  
 
-
-<a href="/listPets">Back to the list</a>
+      <a class="btn btn-success btn-lg my-4" href="/listPets">Back to the list</a>
 
 
 <input type="hidden" name="lat" id="lat">
 <input type="hidden" name="long" id="long">
+
+
+</div>
+
 
 <script src="{{gkey}}"></script>
 

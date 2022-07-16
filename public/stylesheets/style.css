@@ -158,11 +158,37 @@ text-decoration: none;
     
     }
   
+    .imgcoverprofileUser{
+      object-fit: contain;
+      min-width: 300px;
+      max-width: 310px;
+      min-height: 300px;
+      max-height: 310px;
+      
+      }
+
+
   .createNewPet{
     border-radius: 30px;
   }
+
+  #signup{
+    border-radius: 30px;
+    font-size: 22px;
+  }
+
+
+  #profile{
+    border-radius: 30px;
+    font-size: 22px;
+  }
   
   #createNewPet label{
+  
+    font-size: 22px;
+  }
+
+  #editNewPet label{
   
     font-size: 22px;
   }
@@ -257,11 +283,12 @@ ul {
 }
 .cardsPetsProfile{
   display: flex;
-  justify-content: space-between;
+  justify-content: space-evenly;
 }
 .box-2{
   text-align: center;
   margin-top: 40px;
+  
 }
 .box-3{
   text-align: center;
@@ -282,14 +309,14 @@ ul {
 }
 
 .pagUserProfile{
-  height: 1211px;
+/*   height: 2011px; */
   background-image: url("https://img.freepik.com/vector-gratis/fondo-cielo-pastel-acuarela-pintado-mano_23-2148907305.jpg?w=2000");
-  background-size: cover;
-  background-size: 25rem;
-  -moz-background-size: cover;
+  background-size: contain;
+ /*  background-size: 25rem; */
+/*   -moz-background-size: cover;
         -webkit-background-size: cover;
-        -o-background-size: cover;
-  background-repeat: no-repeat;
+        -o-background-size: cover; */
+/*   background-repeat: no-repeat; */
   background-position: center center;
   background-attachment: fixed;
 }
@@ -355,7 +382,7 @@ ul {
         -webkit-background-size: cover;
         -o-background-size: cover;
   background-repeat: no-repeat;
-  background-position: center center;
+  background-position: top;
   background-attachment: fixed;
 }
 
