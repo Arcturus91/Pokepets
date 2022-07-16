@@ -1,109 +1,90 @@
 <div id="form">
 
-    
-    <h2>Edit {{hbpet.petName}} </h2>
+  <h2>Edit {{hbpet.petName}} </h2>
 
-    <form action="/editPet/{{hbpet._id}}" method="POST" enctype="multipart/form-data">
+  <form
+    action="/editPet/{{hbpet._id}}"
+    method="POST"
+    enctype="multipart/form-data"
+    class="px-md-2"
+        id="createNewPet"
+  >
 
-      <label> Pet Sex</label>
-<select name="sex">
-  <option value="Male">Male</option>
-  <option value="Female">Female</option>
-</select>
+    <label> Pet Sex</label>
+    <select name="sex">
+      <option value="Male">Male</option>
+      <option value="Female">Female</option>
+    </select>
 
-           <label> Pet Size</label>
-<select name="size">
-        <option value="">--Please choose an option--</option>
-   <option value="Mini">Mini</option>
-  <option value="Small">Small</option>
-  <option value="Medium">Medium</option>
-  <option value="Large">Large</option>
-  <option value="Extra large">Extra large</option>
-</select>
+    <label> Pet Size</label>
+    <select name="size">
+      <option value="">--Please choose an option--</option>
+      <option value="Mini">Mini</option>
+      <option value="Small">Small</option>
+      <option value="Medium">Medium</option>
+      <option value="Large">Large</option>
+      <option value="Extra large">Extra large</option>
+    </select>
 
+    <label> Pet Weight</label>
+    <input type="number" name="weight" value="{{hbpet.weight}}" />
 
-</br>
-      <label> Pet Weight</label>
-      <input type="number" name="weight" value = "{{hbpet.weight}}">
+    <label for="">Image:
+      <input type="file" name="profile_pic" />
+    </label>
 
-</br>
+    <label> Pet address</label>
+    <input
+      type="text"
+      name="address"
+      id="addressPet"
+      value="{{hbpet.address}}"
+      readonly
+    />
 
-        <label for="">Image:
-             <input type="file" name="profile_pic">
-        </label>
+    <button type="submit">Submit</button>
 
+    <label>Address</label>
+    <input
+      type="hidden"
+      name="latitude"
+      placeholder="latitude"
+      id="latResult"
+      value="{{hbpet.location.coordinates.0}}"
+    />
+    <input
+      type="hidden"
+      name="longitude"
+      placeholder="longitude"
+      id="longResult"
+      value="{{hbpet.location.coordinates.1}}"
+    />
 
-
-
-      <label> Pet address</label>
-      <input type="text" name="address" id="addressPet" value="{{hbpet.address}}" readonly>
-
-
-   <button type="submit">Submit</button>
-
-
-  <label>Address</label>
-  <input  type="hidden"  name="latitude" placeholder="latitude" id="latResult" value="{{hbpet.location.coordinates.[0]}}" >
-  <input  type="hidden"  name="longitude" placeholder="longitude" id="longResult" value="{{hbpet.location.coordinates.[1]}}">
-
-</form>
+  </form>
 </div>
 
 <h5>Want to specify a new address? Search it here:
 </h5>
 
-<p>The new pet address</p> 
-
+<p>The new pet address</p>
 
 <div id="map1"></div>
 
-<input type="text" name="" placeholder="The address in the map" id="address"> 
+<input type="text" name="" placeholder="The address in the map" id="address" />
 
-<input type="submit" name="" id="submit">
-
+<input type="submit" name="" id="submit" />
 
 <a href="/listPets">Back to the list</a>
 
-
-<input type="hidden" name="lat" id="lat">
-<input type="hidden" name="long" id="long">
+<input type="hidden" name="lat" id="lat" />
+<input type="hidden" name="long" id="long" />
 
 <script src="{{gkey}}"></script>
 
-
 <script type="text/javascript" src="/js/profileMap.js"></script>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 {{#if errorMessage}}
-{{errorMessage}}
-<br>
-<img src="https://c.tenor.com/KLAHPW3-BaQAAAAC/loading-error.gif" alt="">
+  {{errorMessage}}
+
+  <img src="https://c.tenor.com/KLAHPW3-BaQAAAAC/loading-error.gif" alt="" />
 {{/if}}

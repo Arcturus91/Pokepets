@@ -355,7 +355,7 @@ ul {
         -webkit-background-size: cover;
         -o-background-size: cover;
   background-repeat: no-repeat;
-  background-position: center center;
+  background-position: top;
   background-attachment: fixed;
 }
 
