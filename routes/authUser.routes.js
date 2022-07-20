@@ -27,8 +27,7 @@ router.post('/signup',fileUploader.single('profile_pic'),(req,res)=>{
 
     if(!req.file){
         console.log("error creating account con picture")
-/*         console.log("yo soy req.file", req.file)
-        console.log("yo soy profile_pic", profile_pic) */
+
        profile_pic = "https://res.cloudinary.com/dhgfid3ej/image/upload/v1558806705/asdsadsa_iysw1l.jpg"
     }else{
         console.log("creating account con picture")
@@ -42,15 +41,14 @@ router.post('/signup',fileUploader.single('profile_pic'),(req,res)=>{
 
     console.log('que es el req.body: ',req.body)
     if(!username||!lastname||!number||!email||!password){
-        console.log('ERROR en los datos de validacion para el post de sigup')
-        res.render('auth/userSignup',{
-            errorMessage:'All fields are required'
+        console.log('ERROR en los datos de validacion para el post de signup')
+        res.render('auth/userSignup',{errorMessage:'All fields are required'
         })
         return;
     }
     const regex = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/;
     if(!regex.test(password)){
-        res.render('auth/userSingup',{errorMessage:'The password needs to have at least eight characters, must contain at least one uppercase letter, lowercase letter and a number.'})
+        res.render('auth/userSignup',{errorMessage:' Password needs at leas:t 8 characters, 1 uppercase, 1 lowercase letter and a number. No special characters @,#, etc, allowed.'})
         return;
     }
     const salt = bcryptjs.genSaltSync(10)
@@ -78,10 +76,10 @@ router.post('/signup',fileUploader.single('profile_pic'),(req,res)=>{
             });
         }else if(error.code===11000){
             res.render('auth/userSignup',{
-                errorMessage: 'The email must be unique'
+                errorMessage: 'The email or phone number must be unique'
             })
         }else{
-            console.log('Salio un error en sigup')
+            console.log('Salio un error en signup')
         }
     })
 })
@@ -127,7 +125,9 @@ router.post('/login', (req,res,next)=>{
     .then((user) =>{
         req.session.currentUser = user;
         if(!user){
-            res.render('auth/userLogin')
+            res.render('auth/userLogin',{
+                errorMessage:'No user found with such email.'
+            })
             return
         }else if(bcryptjs.compareSync(password,user.password)){
             res.redirect(`/auth/user/userProfile/${user._id}`);
@@ -195,7 +195,7 @@ router.get('/editUser/:id',(req,res,next)=>{
     }
     User.findById(user._id)
     .then(userFromDB=>{
-        //console.log('userFromDB',userFromDB)
+        console.log('userFromDB',userFromDB)
          res.render('user/editUser',userFromDB)
          return;  
     })

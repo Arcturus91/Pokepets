@@ -169,7 +169,7 @@ router.get('/listPets/api', (req, res, next) => {
 
 router.get("/profile/:id", (req, res, next) => {
   if (!req.session.currentUser) {
-    return res.render("auth/userSignup"); // quiza sería ideal tener signup / login en uno solo
+    return res.render("auth/userLogin",{errorMessage:' You must be logged for adopting.'});; 
   }
 
   const { id } = req.params;
@@ -185,12 +185,7 @@ Comment.find({_pet:id})
 console.log("el req session del profile",req.session.currentUser.role)
 let role = req.session.currentUser.role
   res.render("auth/profilePet", { hbpet:pet, comments, gkey: key, role });
-})
-
-
-
-      
-      
+})      
     })
     .catch((err) => {
       console.log(err);
@@ -206,7 +201,7 @@ let role = req.session.currentUser.role
 
 router.post("/profile/:id/comment", (req, res, next) => {
   if (!req.session.currentUser) {
-    return res.render("auth/userSignup"); // quiza sería ideal tener signup / login en uno solo
+    return res.render("auth/userSignup"); 
   }
 
   const  _author  = req.session.currentUser._id
@@ -260,7 +255,7 @@ router.get('/profile/api/:id', (req, res, next) => {
 
 router.get("/adoptSuccess/:id", (req, res, next) => {
   if (!req.session.currentUser) {
-    return res.render("auth/userSignup"); // quiza sería ideal tener signup / login en uno solo
+    return res.render("auth/userLogin",{errorMessage:' You must be logged for adopting.'}); 
   }
   const { id } = req.params;
 
@@ -285,7 +280,7 @@ router.get("/deletePet/:id", checkRole(["ADMIN"]), (req, res, next) => {
   console.log("yo soy el user antes de borrar", req.session.currentUser)
 
   if (!req.session.currentUser) {
-    return res.render("auth/userSignup"); // quiza sería ideal tener signup / login en uno solo
+    return res.render("auth/userSignup"); 
   }
   const { id } = req.params;
 
@@ -308,7 +303,7 @@ router.get("/deletePet/:id", checkRole(["ADMIN"]), (req, res, next) => {
 router.get("/editPet/:id", checkRole(["ADMIN"]), (req, res, next) => {
 
  if (!req.session.currentUser) {
-    return res.render("auth/userSignup"); // quiza sería ideal tener signup / login en uno solo
+    return res.render("auth/userSignup"); 
   }
 
   const { id } = req.params;
