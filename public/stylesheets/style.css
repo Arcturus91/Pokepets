@@ -187,10 +187,7 @@ text-decoration: none;
   }
 
 
-  #profile{
-    border-radius: 30px;
-    font-size: 22px;
-  }
+ 
   
   #createNewPet label{
   
@@ -208,7 +205,10 @@ text-decoration: none;
   font-weight: bold;
 }
 
-
+#profile{
+  border-radius: 30px;
+  font-size: 22px;
+}
 
 h1 {
   color: 15px;

@@ -9,7 +9,7 @@ const userSchema = new Schema(
   {
   username: {
     type: String,
-    trim: true,
+    trim: true, //blanc spaces will be trimmed
     required: true
     },
   lastname: {

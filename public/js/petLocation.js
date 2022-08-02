@@ -38,9 +38,8 @@ window.addEventListener('load', () => {
 
 let url = window.location.href
 
-//http://localhost:3000/pets/62c5d52e8ee0d26aa86320e0
-//http://localhost:3000/profile/62c718f0d0e9b4eb8b270a35
-let id = url.slice(30)
+let startPos = url.indexOf("profile/") + 8;
+let id = url.slice(startPos)
 
 console.log(id)
                         
